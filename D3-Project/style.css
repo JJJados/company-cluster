@@ -1,0 +1,42 @@
+h1 {
+    font-family: helvetica, arial, sans-serif;
+}
+
+#line-chart .line {
+    fill: none;
+    stroke: rgb(10, 238, 79);
+    stroke-width: 3px;
+}
+
+/* Referenced: https://bl.ocks.org/d3noob/629790fc15cc1afba0253f29a4d246e7 */
+#line-chart .domain, .tick line {
+    stroke: rgb(231, 231, 231);
+}
+
+#line-chart .tick text {
+    stroke: rgb(231, 231, 231);
+    stroke-width: 0.2px;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Referenced textbook */
+#line-chart-tooltip {
+    position: absolute;
+    width: auto;
+    height: auto;
+    padding: 5px;
+    background-color: black;
+    border-radius: 10px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    pointer-events: none;
+    color: white;
+    font-family: helvetica, arial, sans-serif;
+}
+
+#line-chart .label {
+    font-family: helvetica, arial, sans-serif;
+    font-weight: bold;
+}

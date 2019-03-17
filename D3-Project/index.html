@@ -2,16 +2,26 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" <title>D3 Page Template</title>
-    <script src="http://d3js.org/d3.v4.js"></script>
-    <script src="dataFetcher.js" type="application/javascript"></script>
-   <!-- <script src="clickCompare.js" type="application/javascript"></script> -->
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css" type="text/css"/>
 </head>
 
 <body>
 
+    <h1>Coca-Cola Company vs. PepsiCo Inc.</h1>
+
+    <p></p>
+
     <div id="line-chart"></div>
 
+    <div id="line-chart-tooltip" class="hidden">
+        <p><strong>Year: </strong><span id="year"></span></p>
+        <p><strong>Dividend: $</strong><span id="value"></span></p>
+    </div>
+
+    <script src="http://d3js.org/d3.v4.min.js"></script>
+    <!--<script src="dataFetcher.js" type="application/javascript"></script>-->
+    <script src="src/clickCompare.js"></script>
 </body>
 
 </html>

@@ -55,6 +55,30 @@ let hideTooltip = function (d) {
     d3.select("#line-chart-tooltip").classed("hidden", true);
 }
 
+let changeStyle = function (selectString, attribute, value) {
+    d3.selectAll(selectString).style(attribute, value);
+}
+
+let lightenTicker1Line = function (lightColor) {
+    changeStyle(".ticker1circles", "fill", lightColor); 
+    changeStyle("#ticker1line", "stroke", lightColor);
+}
+
+let darkenTicker1Line = function (darkColor) {
+    changeStyle(".ticker1circles", "fill", darkColor); 
+    changeStyle("#ticker1line", "stroke", darkColor);
+}
+
+let lightenTicker2Line = function (lightColor) {
+    changeStyle(".ticker2circles", "fill", lightColor); 
+    changeStyle("#ticker2line", "stroke", lightColor);
+}
+
+let darkenTicker2Line = function (darkColor) {
+    changeStyle(".ticker2circles", "fill", darkColor); 
+    changeStyle("#ticker2line", "stroke", darkColor);
+}
+
 /**
  * displayLineChart parses the historical data and displays data 
  * for two companies with the provided tickers
@@ -63,7 +87,7 @@ let hideTooltip = function (d) {
  */
 let displayLineChart = function (ticker1, ticker2) {
     
-    d3.csv("historicalData.csv", rowConverter, function(data) {
+    d3.csv("src/historicalData.csv", rowConverter, function(data) {
        
         // Now that we have the data we're interested in, we can create the graph!
         let width = 1000;
@@ -72,7 +96,9 @@ let displayLineChart = function (ticker1, ticker2) {
         
         let homeDiv = "#line-chart";
         let ticker1Color = "red";
+        let ticker1ColorLight = "lightcoral";
         let ticker2Color = "blue"; //rgb(10, 238, 150)
+        let ticker2ColorLight = "lightblue"
        
         // Find maximum dividend yield of the companies of interest.
         let ticker1Max = d3.max(data, function (d) { return d[ticker1] } );
@@ -133,9 +159,12 @@ let displayLineChart = function (ticker1, ticker2) {
         // Render the line by adding it to the existing svg
         svg.append("path")
                 .datum(data)
+                .attr("id", "ticker1line")
                 .attr("class", "line")
                 .attr("d", line1)
-                .style("stroke", ticker1Color);
+                .style("stroke", ticker1Color)
+                .on("mouseover", function () {lightenTicker2Line(ticker2ColorLight)})
+                .on("mouseout", function () {darkenTicker2Line(ticker2ColorLight)});
         
         // Create the line generator for ticker2
         let line2 = d3.line()
@@ -145,9 +174,12 @@ let displayLineChart = function (ticker1, ticker2) {
         // Render the line by adding it to the existing svg
         svg.append("path")
                 .datum(data)
+                .attr("id", "ticker2line")
                 .attr("class", "line")
                 .attr("d", line2)
-                .style("stroke", ticker2Color);
+                .style("stroke", ticker2Color)
+                .on("mouseover", function () {lightenTicker1Line(ticker1ColorLight)})
+                .on("mouseout", function () {darkenTicker1Line(ticker1ColorLight)});
 
 
         // Create circles for each year for ticker1
@@ -155,6 +187,7 @@ let displayLineChart = function (ticker1, ticker2) {
             .data(data)
             .enter()
             .append("circle")
+            .attr("class", "ticker1circles")
             .attr("cx", function (d) {
                 return xScale(d.year);
             })
@@ -165,9 +198,14 @@ let displayLineChart = function (ticker1, ticker2) {
                 return 5;
             })
             .style("fill", ticker1Color)
-            .attr("class", "data-point")
-            .on("mouseover", function (d){ showTooltip (d, ticker1); } )
-            .on("mouseout", hideTooltip );
+            .on("mouseover", function (d){ 
+                showTooltip (d, ticker1); 
+                lightenTicker2Line(ticker2ColorLight);
+            })
+            .on("mouseout", function() {
+                hideTooltip();
+                darkenTicker2Line(ticker2Color);
+            });
         
         // Create circles for each year for ticker2
         svg.selectAll("ticker2circles")
@@ -184,9 +222,15 @@ let displayLineChart = function (ticker1, ticker2) {
                 return 5;
             })
             .style("fill", ticker2Color)
-            .attr("class", "data-point")
-            .on("mouseover", function (d){ showTooltip (d, ticker2); } )
-            .on("mouseout", hideTooltip );
+            .attr("class", "ticker2circles")
+            .on("mouseover", function (d){ 
+                showTooltip (d, ticker2); 
+                lightenTicker1Line(ticker1ColorLight);
+            })
+            .on("mouseout", function() {
+                hideTooltip();
+                darkenTicker1Line(ticker1Color);
+            });
 
         // Create a label for the ticker 1 line 
         svg.append("text")

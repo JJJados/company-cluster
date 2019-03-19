@@ -3,6 +3,7 @@
  * 
  * Author: Komal Aheer
  * Data Source: DRiP Investing Resources
+ * D3 Version 4
  */
 
 /**
@@ -11,14 +12,18 @@
  * @param Historical Data row
  */
 let rowConverter = function (data) {
+    // Parse year into time
     let newRow = {
         year: parseYear(data.year)
     }
+    
+    // Parse dividends into floats
     Object.keys(data).forEach(function (key) {
         if (key !== "year") {
             newRow[key] = parseFloat(data[key]);
         }
     });
+
     return newRow;
 }
 
@@ -55,28 +60,33 @@ let hideTooltip = function (d) {
     d3.select("#line-chart-tooltip").classed("hidden", true);
 }
 
+/**
+ * changeStyle alters the style of the element attained using the 
+ * provided select string to include the provided attribute and value
+ * @param {*} selectString 
+ * @param {*} attribute 
+ * @param {*} value 
+ */
 let changeStyle = function (selectString, attribute, value) {
     d3.selectAll(selectString).style(attribute, value);
 }
 
-let lightenTicker1Line = function (lightColor) {
-    changeStyle(".ticker1circles", "fill", lightColor); 
-    changeStyle("#ticker1line", "stroke", lightColor);
+/**
+ * colorTicker1Line makes the ticker1 line and points the color provided 
+ * @param {*} color 
+ */
+let colorTicker1Line = function (color) {
+    changeStyle(".ticker1circles", "fill", color); 
+    changeStyle("#ticker1line", "stroke", color);
 }
 
-let darkenTicker1Line = function (darkColor) {
-    changeStyle(".ticker1circles", "fill", darkColor); 
-    changeStyle("#ticker1line", "stroke", darkColor);
-}
-
-let lightenTicker2Line = function (lightColor) {
-    changeStyle(".ticker2circles", "fill", lightColor); 
-    changeStyle("#ticker2line", "stroke", lightColor);
-}
-
-let darkenTicker2Line = function (darkColor) {
-    changeStyle(".ticker2circles", "fill", darkColor); 
-    changeStyle("#ticker2line", "stroke", darkColor);
+/**
+ * colorTicker2Line makes the ticker2 line and points the color provided 
+ * @param {*} color 
+ */
+let colorTicker2Line = function (color) {
+    changeStyle(".ticker2circles", "fill", color); 
+    changeStyle("#ticker2line", "stroke", color);
 }
 
 /**
@@ -87,9 +97,10 @@ let darkenTicker2Line = function (darkColor) {
  */
 let displayLineChart = function (ticker1, ticker2) {
     
+    // Parse the historical data 
     d3.csv("src/historicalData.csv", rowConverter, function(data) {
        
-        // Now that we have the data we're interested in, we can create the graph!
+        // Initiate frequently used variables in this function 
         let width = 1000;
         let height = 300;
         let padding = 30;
@@ -97,7 +108,7 @@ let displayLineChart = function (ticker1, ticker2) {
         let homeDiv = "#line-chart";
         let ticker1Color = "red";
         let ticker1ColorLight = "lightcoral";
-        let ticker2Color = "blue"; //rgb(10, 238, 150)
+        let ticker2Color = "blue";
         let ticker2ColorLight = "lightblue"
        
         // Find maximum dividend yield of the companies of interest.
@@ -163,8 +174,8 @@ let displayLineChart = function (ticker1, ticker2) {
                 .attr("class", "line")
                 .attr("d", line1)
                 .style("stroke", ticker1Color)
-                .on("mouseover", function () {lightenTicker2Line(ticker2ColorLight)})
-                .on("mouseout", function () {darkenTicker2Line(ticker2ColorLight)});
+                .on("mouseover", function () {colorTicker2Line(ticker2ColorLight)})
+                .on("mouseout", function () {colorTicker2Line(ticker2Color)});
         
         // Create the line generator for ticker2
         let line2 = d3.line()
@@ -178,8 +189,8 @@ let displayLineChart = function (ticker1, ticker2) {
                 .attr("class", "line")
                 .attr("d", line2)
                 .style("stroke", ticker2Color)
-                .on("mouseover", function () {lightenTicker1Line(ticker1ColorLight)})
-                .on("mouseout", function () {darkenTicker1Line(ticker1ColorLight)});
+                .on("mouseover", function () {colorTicker1Line(ticker1ColorLight)})
+                .on("mouseout", function () {colorTicker1Line(ticker1Color)});
 
 
         // Create circles for each year for ticker1
@@ -194,17 +205,16 @@ let displayLineChart = function (ticker1, ticker2) {
             .attr("cy", function (d) {
                 return yScale(d[ticker1]);
             })
-            .attr("r", function () {
-                return 5;
-            })
+            .attr("r", "5")
             .style("fill", ticker1Color)
             .on("mouseover", function (d){ 
+               //console.log(i);
                 showTooltip (d, ticker1); 
-                lightenTicker2Line(ticker2ColorLight);
+                colorTicker2Line(ticker2ColorLight);
             })
             .on("mouseout", function() {
                 hideTooltip();
-                darkenTicker2Line(ticker2Color);
+                colorTicker2Line(ticker2Color);
             });
         
         // Create circles for each year for ticker2
@@ -225,11 +235,11 @@ let displayLineChart = function (ticker1, ticker2) {
             .attr("class", "ticker2circles")
             .on("mouseover", function (d){ 
                 showTooltip (d, ticker2); 
-                lightenTicker1Line(ticker1ColorLight);
+                colorTicker1Line(ticker1ColorLight);
             })
             .on("mouseout", function() {
                 hideTooltip();
-                darkenTicker1Line(ticker1Color);
+                colorTicker1Line(ticker1Color);
             });
 
         // Create a label for the ticker 1 line 
@@ -242,6 +252,7 @@ let displayLineChart = function (ticker1, ticker2) {
             })
             .style("fill", ticker1Color);
         
+        // Create a label for the ticker 2 line 
         svg.append("text")
         .attr("x", xScale(data[0].year) + 10)
         .attr("y", yScale(data[0][ticker2]) + 5)
@@ -257,6 +268,7 @@ let displayLineChart = function (ticker1, ticker2) {
 let parseYear;
 let timeFormat;
 
+// On start, create the chart for coke vs. pepsi
 window.onload = function () {
     let ticker1 = "KO";
     let ticker2 = "PEP";

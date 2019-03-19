@@ -7,18 +7,89 @@
 </head>
 
 <body>
+    <div class="story">
+        <h1>Same Taste, Different Brand?</h1>
+        <h2>Coca-Cola Company vs. PepsiCo Inc.</h2>
+        <h3>By Komal Aheer</h3>
 
-    <h1>Coca-Cola Company vs. PepsiCo Inc.</h1>
-
-    <p></p>
-
+        <p>
+            The Coca-Cola Company (KO) and PepsiCo Inc. (PEP) have been two of the most dominant faces in the beverage industry. 
+            They've brought a wide variety of commonly consumed beverages including 
+            <a href="https://www.pepsico.com/brands/product-information">Pepsi's</a> 7up, Gatorade, Brisk iced tea, 
+            and Mountain Dew as well as 
+            <a href="https://www.coca-cola.ca/brands/coca-cola">Coca-Cola's</a> Nestea, Minute Maid, Five Alive, Fruitopia, 
+            Sprite, Powerade, Fresca,
+            and Sprite. Of course who can forget, the two companies' infamous beverages Pepsi and Coca-Cola. Though some 
+            people can't taste the difference, the two companies are very different. So, which one is worth the investment?
+            Who's the real winner in this war of Coca-Cola vs. Pepsi?
+        </p>
+        <p>
+            To gain some insight into this, historical stock market data was taken from
+            <a href="https://learn.macewan.ca/bbcswebdav/pid-2054875-dt-content-rid-8381171_1/xid-8381171_1">DRiP investment</a>. 
+            As it turns out, PepsiCo has shown a greater increase in dividend yield throughout the years than Coca-Cola has. This has been
+            the case since 1999. Although they were experiencing a similar rate of growth from 1999 to the early 2000's, the gap between 
+            them quickly grew with Pepsi coming out on top. Although annual changes in dividend yield are not the only indicator of the 
+            value of a company, based on these results, Pepsi is the clear winner. 
+        </p>
+        
+    </div>
     <div id="line-chart"></div>
+    <p id="source">Source: DRiP investment</p>
 
     <div id="line-chart-tooltip" class="hidden">
         <p><strong>Year: </strong><span id="year"></span></p>
-        <p><strong>Dividend: $</strong><span id="value"></span></p>
+        <p><strong>Dividend: </strong><span id="value"></span>%</p>
     </div>
 
+    <div class="story">
+        <h2>Design Decisions & Justification</h2>
+        <ul>
+            <li>
+                A line chart was thought to be the best way to display this data as the goal was to display trends in dividend
+                yields. Line charts are very effective for showing trends over time.
+            </li>
+            <li>
+                In order to place emphasis on the trends themselves, the axes are colored grey. This way they don't take attention
+                away from the trends. Other visual elements such as gridlines were not included in order to reduce clutter.
+            </li>
+            <li>
+                The data points were included in the chart to support hover interactions. When the user hovers over them, they can 
+                see details pertaining to the specific dividend yield at that point in time. This allows them to easily compare 
+                the two companies' values.
+            </li>
+            <li>
+                When the user hovers over a trend, the opposing trend becomes a lighter color. This is used to emphasize one trend 
+                over the other. In addition, for areas of the chart where the lines are close together, such as the very beginning, this highlight 
+                allows the user to clearly see which trend they are hovering over. 
+            </li>
+            <li>
+                The colors used correspond to the brand colors of Pepsi and Coca Cola. Given the popularity of these brands, it's expected
+                that the users will be familiar with these colors. Hence, it is expected that viewers will easily be able to understand
+                which line applies to which company.
+            </li>
+            <li>
+                In addition to the color choice, the company's ticker symbol is displayed right next to the line that it corresponds to. 
+                This supports easy lookup in case the user is unfamiliar with the brand colors. 
+            </li>
+        </ul>
+
+        <h4> Rules of Thumb Supported </h4>
+        <ul>
+            <li>
+                <em>Get it Right in Black and White</em> - This design is not heavily reliant on colors. The user can infer the company from
+                the ticker symbol.
+            </li>
+            <li>
+                <em>Responsiveness is Required</em> - The design includes immediate visual feedback when the user hovers over a trend
+                or data point. 
+            </li>
+            <li>
+                <em>Eyes Beat Memory</em> - As mentioned previously, the user can infer the company from the ticker symbol right beside
+                the line it's assoiciated with. In addition, the user can hover over a point to see the dividend yield for a particular year. 
+            </li>
+        </ul>
+    </div>
+    
     <script src="http://d3js.org/d3.v4.min.js"></script>
     <!--<script src="dataFetcher.js" type="application/javascript"></script>-->
     <script src="src/clickCompare.js"></script>

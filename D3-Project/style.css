@@ -1,6 +1,30 @@
-h1 {
-    font-family: helvetica, arial, sans-serif;
+body {
+    margin-bottom: 100px;
 }
+
+.story {
+    font-family: helvetica, arial, sans-serif;
+    text-align: center;
+    width: 65%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+}
+
+#source {
+    font-family: helvetica, arial, sans-serif;
+    text-align: right;
+    margin-right: 20%;
+    color: gray;
+    font-style: italic;
+}
+
+.story p, ul {
+    font-family: helvetica, arial, sans-serif;
+    text-align: left;
+}
+
+
 
 #line-chart .line {
     fill: none;
@@ -39,4 +63,12 @@ h1 {
 #line-chart .label {
     font-family: helvetica, arial, sans-serif;
     font-weight: bold;
+}
+
+body {
+    text-align: center;
+}
+
+circle:hover {
+    radius: 100px;
 }

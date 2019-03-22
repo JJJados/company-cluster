@@ -7,6 +7,7 @@
         
         <script src="http://d3js.org/d3.v4.min.js"></script>
         <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+       
 
         <!-- <script src="src/ClusterModel.js" type="application/javascript"></script> -->
         <!-- <script src="src/ClusterController.js" type="application/javascript"></script> -->
@@ -31,27 +32,40 @@
         <br>
         <hr>
         <br>
-        <h3>Market Capital Overview</h3>
 
-        <div class="buttonParent">
-            <button class="button button1" type="button">Health Care</button>
-            <button class="button button2" type="button">Information Technology</button> 
-            <button class="button button3" type="button">Financials</button> 
-            <button class="button button4" type="button">Industrials</button> 
-            <button class="button button5" type="button">Real Estate</button> 
-        </div>
-        <div class="buttonParent">
-            <button class="button button6" type="button">Consumer Discretionary</button> 
-            <button class="button button7" type="button">Consumer Staples</button>
-            <button class="button button8" type="button">Communication Services</button>
-            <button class="button button9" type="button">Materials</button> 
-            <button class="button button10" type="button">Energy</button> 
-            <button class="button button11" type="button">Utilities</button> 
-        </div>
-        <br>
-        <div id="market_cap_overview">
-            <script src="src/overview.js" type="application/javascript"></script>
-        </div>
+        <section id="overview">
+            <h3>Market Capital Overview</h3>
+            <div class="buttonParent">
+                <button class="button button1" type="button">Health Care</button>
+                <button class="button button2" type="button">Information Technology</button> 
+                <button class="button button3" type="button">Financials</button> 
+                <button class="button button4" type="button">Industrials</button> 
+                <button class="button button5" type="button">Real Estate</button> 
+            </div>
+            <div class="buttonParent">
+                <button class="button button6" type="button">Consumer Discretionary</button> 
+                <button class="button button7" type="button">Consumer Staples</button>
+                <button class="button button8" type="button">Communication Services</button>
+                <button class="button button9" type="button">Materials</button> 
+                <button class="button button10" type="button">Energy</button> 
+                <button class="button button11" type="button">Utilities</button> 
+            </div>
+            <br>
+            <div id="market_cap_overview">
+                <svg id="canvas"></svg>
+            </div>
+        </section>
+
+        <section id="clickCompare" class="hidden">
+            <div id="line-chart"></div>
+            <p id="source">Source: DRiP investment</p>
+        
+            <!-- This div moves around -->
+            <div id="line-chart-tooltip" class="hidden">
+                <p><strong>Year: </strong><span id="year"></span></p>
+                <p><strong>Dividend: </strong>$<span id="value"></span></p>
+            </div>
+        </section>
 
         <footer>
             <h4>
@@ -59,6 +73,8 @@
             </h4>
         </footer>
 
+        <script src="src/overview.js" type="application/javascript"></script>
+        <script src="src/clickCompare.js" type="application/javascript"></script>
     </body>
 
 </html>

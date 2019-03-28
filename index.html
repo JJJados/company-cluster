@@ -2,62 +2,48 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <link type="text/css" rel="stylesheet" href="index.css" media="screen">
+        <link type="text/css" rel="stylesheet" href="style.css" media="screen">
         <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
         
         <script src="http://d3js.org/d3.v4.min.js"></script>
         <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
-       
-
-        <!-- <script src="src/ClusterModel.js" type="application/javascript"></script> -->
-        <!-- <script src="src/ClusterController.js" type="application/javascript"></script> -->
-    <!-- <script src="clickCompare.js" type="application/javascript"></script> -->
     </head>
 
     <body>
-        <h1>Company Cluster</h1>
-        <h2>
-            The purpose of this visualization application is to provide an overview of the different companies and sectors 
-            <br>
-            within the U.S. Dividends Champions, Challengers, and Contenders dataset provided by http://www.dripinvesting.org/Tools/Tools.asp.
-            <br><br>
-            Each bubble represents a company, and each color identifies which sector they are within. The size of each bubble is relative to 
-            <br>
-            each company's market capitalization. This makes it easy to identify the large companies and the smaller ones. Exploring the
-            <br>
-            visualization is easy, with the ability to get information about each bubble by simply hovering your mouse. This provides a
-            <br>
-            snapshot of some key attributes such as their market capitalization, estimated growth, past growth, and more.
-        </h2>
-        <br>
-        <hr>
-        <br>
-
         <section id="overview">
             <h3>Market Capital Overview</h3>
-            <div class="buttonParent">
-                <button class="button button1" type="button">Health Care</button>
-                <button class="button button2" type="button">Information Technology</button> 
-                <button class="button button3" type="button">Financials</button> 
-                <button class="button button4" type="button">Industrials</button> 
-                <button class="button button5" type="button">Real Estate</button> 
+            <div class="overviewButtons">
+                <button class="button1" type="button">Health Care</button>
+                <button class="button2" type="button">Information Technology</button> 
+                <button class="button3" type="button">Financials</button> 
+                <button class="button4" type="button">Industrials</button> 
+                <button class="button5" type="button">Real Estate</button> 
             </div>
-            <div class="buttonParent">
-                <button class="button button6" type="button">Consumer Discretionary</button> 
-                <button class="button button7" type="button">Consumer Staples</button>
-                <button class="button button8" type="button">Communication Services</button>
-                <button class="button button9" type="button">Materials</button> 
-                <button class="button button10" type="button">Energy</button> 
-                <button class="button button11" type="button">Utilities</button> 
+            <div class="overviewButtons">
+                <button class="button6" type="button">Consumer Discretionary</button> 
+                <button class="button7" type="button">Consumer Staples</button>
+                <button class="button8" type="button">Communication Services</button>
+                <button class="button9" type="button">Materials</button> 
+                <button class="button10" type="button">Energy</button> 
+                <button class="button11" type="button">Utilities</button> 
             </div>
+            <button id="compare-button" class="hidden">
+                Compare
+            </button>
             <br>
             <div id="market_cap_overview">
-                <svg id="canvas"></svg>
+                <svg id="overview-canvas"></svg>
             </div>
         </section>
 
-        <section id="clickCompare" class="hidden">
-            <div id="line-chart"></div>
+        <section id="click-compare" class="hidden">
+            <button id="back-button">
+                    Back
+                </button>        
+            <div id="line-chart">
+                <svg id="line-chart-canvas"></svg>
+            </div>
+
             <p id="source">Source: DRiP investment</p>
         
             <!-- This div moves around -->
@@ -73,6 +59,8 @@
             </h4>
         </footer>
 
+        <script src="src/selectedTickers.js"> </script>
+        <script src="src/main.js" type="application/javascript"></script>
         <script src="src/overview.js" type="application/javascript"></script>
         <script src="src/clickCompare.js" type="application/javascript"></script>
     </body>

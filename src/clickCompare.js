@@ -98,6 +98,12 @@ let colorTicker2Line = function (color) {
  * @param ticker2 
  */
 let displayLineChart = function (ticker1, ticker2) {
+
+    console.log(ticker1, ticker2);
+
+    // Clear any existing images
+    d3.select("#line-chart-canvas").html("");
+
     // Parse the historical data 
     d3.csv("src/historicalData.csv", rowConverter, function(data) {
        
@@ -105,14 +111,12 @@ let displayLineChart = function (ticker1, ticker2) {
         let width = 1000;
         let height = 400;
         let padding = 60;
-        
-        let homeDiv = "#line-chart"; // where the chart will be displayed
 
         // Set colors
-        let ticker1Color = "red";
-        let ticker1ColorLight = "lightcoral";
-        let ticker2Color = "blue";
-        let ticker2ColorLight = "lightblue"
+        let ticker1Color = "#42f495";
+        let ticker1ColorLight = "#38b774";
+        let ticker2Color = "#ff56d7";
+        let ticker2ColorLight = "#b53d98"
        
         // Find maximum dividend yield of the companies of interest.
         let ticker1Max = d3.max(data, function (d) { return d[ticker1] } );
@@ -153,10 +157,7 @@ let displayLineChart = function (ticker1, ticker2) {
             }); 
         
         // create the SVG to hold the graph 
-        let svg = d3.select(homeDiv)
-            .append("svg")
-            .attr("width", width)
-            .attr("height", height);
+        let svg = d3.select("#line-chart-canvas");
         
         //Create X axis
         svg.append("g")
@@ -290,13 +291,12 @@ let displayLineChart = function (ticker1, ticker2) {
 let parseYear;
 let timeFormat;
 
-// On start, create the chart for coke vs. pepsi
-window.onload = function () {
-    let ticker1 = "KO";
-    let ticker2 = "PEP";
+// On start, get the two ticker symbols selected and create the chart
+let showClickCompare  = function () {
+    tickers = selectedTickers.getTickers()
 
     parseYear = d3.timeParse("%Y");
     timeFormat = d3.timeFormat("%Y");
 
-    displayLineChart(ticker1, ticker2);
+    displayLineChart(tickers[0], tickers[1]);
 }

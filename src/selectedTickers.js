@@ -1,0 +1,52 @@
+
+/**
+ * This class is used to manage the list of selected tickers
+ */
+class SelectedTickers {
+    constructor () {
+     this.tickers = [];
+    }
+ 
+    // Retrieve all the selected tickers
+    getTickers() {
+     return this.tickers;
+    }
+ 
+    // Add a selected ticker to the array 
+    addTicker(ticker) {
+     if (this.isFull()) {
+         return;
+     }
+     this.tickers.push(ticker);
+    }
+ 
+    // Remove the given ticker from the selections array
+    removeTicker(ticker) {
+        if (this.tickers.length == 0) {
+            return;
+        }
+        if (this.tickers[0] === ticker) {
+             this.tickers.shift();
+        } else if (this.tickers[1] === ticker) {
+             this.tickers.pop();
+        }
+    }
+ 
+    isFull() {
+     return this.tickers.length == 2;
+    }
+ 
+    contains(selectedTicker) {
+        for (let ticker of this.tickers) {
+            if (ticker === selectedTicker) {
+                 return true;
+            }
+        }
+        return false;
+    }
+ 
+    destroy() {
+        this.tickers = [];
+    }
+ 
+ }

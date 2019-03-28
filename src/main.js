@@ -30,12 +30,7 @@ let hideCompareButton = function () {
     .attr("class", "hidden");
 }
 
-// This variable will hold the ticker symbols of the selected circles. 
-let selectedTickers;
-
-window.addEventListener('DOMContentLoaded', function (event) {
-    selectedTickers = new SelectedTickers();
-
+let addEventListeners= function () {
     // Add event listener for click and compare
     d3.select("#compare-button")
         .on("click", function () {
@@ -50,22 +45,36 @@ window.addEventListener('DOMContentLoaded', function (event) {
             hideCompareButton();
         });
 
-    // Create svg element for the overview
-    d3.select("#overview-canvas")
-            .attr("width", width)
-            .attr("height", height)
-            .attr("align", "center");
-
-    // Create the svg element for the line chart
-    d3.select("#line-chart-canvas")
-            .attr("width", width)
-            .attr("height", height);
-
     /* Add event listeners to each of the sector buttons to filter the overview accordingly  */
     sectorButtons = document.querySelectorAll(".overviewButtons button");
     for (let button of sectorButtons) {
         button.addEventListener("click", sectorButtonClick);
     }
+
+}
+
+
+// This variable will hold the ticker symbols of the selected circles. 
+let selectedTickers;
+
+window.addEventListener('DOMContentLoaded', function (event) {
+    selectedTickers = new SelectedTickers();
+
+    addEventListeners();
+
+    // Adjust svg element for the overview
+    d3.select("#overview-canvas")
+            .attr("width", width)
+            .attr("height", height)
+            .attr("align", "center");
+
+    // Adjust the svg element for the line chart
+    d3.select("#line-chart-canvas")
+            .attr("width", 1000)
+            .attr("height", 400);
+
+    //prepareClickCompareData();
+    
 
     // Put in on drag? listeners and call update for the callback 
 });

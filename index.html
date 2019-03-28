@@ -4,9 +4,6 @@
         <meta charset="UTF-8">
         <link type="text/css" rel="stylesheet" href="style.css" media="screen">
         <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-        
-        <script src="http://d3js.org/d3.v4.min.js"></script>
-        <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
     </head>
 
     <body>
@@ -37,14 +34,55 @@
         </section>
 
         <section id="click-compare" class="hidden">
-            <button id="back-button">
-                    Back
-                </button>        
+            <button id="back-button">Back</button>  
+            <h1>Click & Compare</h1>
             <div id="line-chart">
                 <svg id="line-chart-canvas"></svg>
             </div>
-
-            <p id="source">Source: DRiP investment</p>
+            <div id="compare-table">
+                <table>
+                    <tr>
+                        <th></th> <!--Empty on purpose -->
+                        <th id="column-ticker1"></th>
+                        <th id="column-ticker2"></th>
+                    </tr>
+                    <tr>
+                        <td id="column-mark-cap">Market Capital<br>($Millions)</td>
+                        <td id="ticker1-mark-cap"></td>
+                        <td id="ticker2-mark-cap"></td>
+                    </tr>
+                    <tr>
+                        <td id="column-div-yield">Current Dividend Yield</td>
+                        <td id="ticker1-div-yield"></td>
+                        <td id="ticker2-div-yield"></td>
+                    </tr>
+                    <tr>
+                        <td id="column-eps">EPS</td>
+                        <td id="ticker1-eps"></td>
+                        <td id="ticker2-eps"></td>
+                    </tr>
+                    <tr>
+                        <td id="column-pe">PE</td>
+                        <td id="ticker1-pe"></td>
+                        <td id="ticker2-pe"></td>
+                    </tr>
+                    <tr>
+                        <td id="column-peg">PEG</td>
+                        <td id="ticker1-peg"></td>
+                        <td id="ticker2-peg"></td>
+                    </tr>
+                    <tr>
+                        <td id="column-streak">Streak</td>
+                        <td id="ticker1-streak"></td>
+                        <td id="ticker2-streak"></td>
+                    </tr>
+                    <tr>
+                        <td id="column-ror">Rate of Return</td>
+                        <td id="ticker1-ror"></td>
+                        <td id="ticker2-ror"></td>
+                    </tr>
+                </table>
+            </div>
         
             <!-- This div moves around -->
             <div id="line-chart-tooltip" class="hidden">
@@ -59,10 +97,12 @@
             </h4>
         </footer>
 
+        <script src="http://d3js.org/d3.v4.min.js"></script>
+        <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
         <script src="src/selectedTickers.js"> </script>
-        <script src="src/main.js" type="application/javascript"></script>
         <script src="src/overview.js" type="application/javascript"></script>
         <script src="src/clickCompare.js" type="application/javascript"></script>
+        <script src="src/main.js" type="application/javascript"></script>
     </body>
 
 </html>

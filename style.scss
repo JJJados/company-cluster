@@ -1,3 +1,6 @@
+$grey: rgb(231, 231, 231);
+$head-font: 'Lato', sans-serif;
+
 @mixin transition($time) {
     transition: all $time ease-in-out;
     -webkit-transition: all $time ease-in-out; /** Chrome & Safari **/
@@ -5,7 +8,72 @@
     -o-transition: all $time ease-in-out; /** Opera **/
 }
 
+body {
+    background-color: #293341;
+    text-align: center;
+    font-family: $head-font;
+}
 
+h1 {
+    text-align: center;
+    color: white;
+    stroke: aliceblue;
+    stroke-width: 5%;
+    font-size: 200%;
+}
+
+h2 {
+    text-align: center;
+    color: white;
+    stroke: black;
+    stroke-width: 10%;
+    text-shadow: #293341;
+    font-size: 100%;
+}
+
+h3 {
+    text-align: center;
+    color: white;
+    stroke: aliceblue;
+    stroke-width: 5%;
+    font-size: 110%;
+}
+
+h4 {
+    text-align: center;
+    color: white;
+    stroke: aliceblue;
+    stroke-width: 5%;
+    font-size: 75%;
+}
+/*--------------------------------------------------------------*/
+
+#compare-table {
+    float: right;
+    margin-right: 50px;
+    margin-top: 50px;
+
+    color: $grey;
+    font-weight: bold;
+    border: 3px solid $grey;
+    
+    margin-left: 20px;
+
+    width: 350px;
+    td, tr, th {
+        padding: 10px;
+        text-align: center;
+    }
+}
+
+#column-ticker1 {
+    color: #42f495;
+}
+
+#column-ticker2 {
+    color: #ff56d7;
+}
+/*--------------------------------------------------------------*/
 
 .hidden {
     display: None;
@@ -17,20 +85,6 @@
     font-family: helvetica, arial, sans-serif;
 }
 
-#line-chart .line {
-    fill: none;
-    stroke: rgb(10, 238, 79);
-    stroke-width: 3px;
-}
-
-#line-chart .domain, .tick line {
-    stroke: rgb(231, 231, 231);
-}
-
-#line-chart .tick text {
-    stroke: rgb(231, 231, 231);
-    stroke-width: 0.5px;
-}
 
 /* Referenced textbook */
 #line-chart-tooltip {
@@ -46,69 +100,45 @@
     font-family: helvetica, arial, sans-serif;
 }
 
-#line-chart .label {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-weight: bold;
+#line-chart {
+    margin-top: 20px;
+    display: inline-block;
+    .line {
+        fill: none;
+        stroke-width: 3px;
+    }
+
+    .domain, .tick line {
+        stroke: $grey;
+    }
+    
+    .tick text {
+        stroke: $grey;
+        stroke-width: 0.5px;
+    }
+
+    .label {
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-weight: bold;
+    }
 }
 
 #compare-button, #back-button {
     background-color: white;
 }
 
+#back-button {
+   position: fixed;
+   text-align: left;
+   left: 0;
+   top: 0;
+   margin-left: 50px;
+   margin-top: 20px;
+}
+
 /*----------------------------------------------------------------------*/
 
-body {
-    background-color: #293341;
-    text-align: center;
-}
 
-h1 {
-    text-align: center;
-    color: white;
-    stroke: aliceblue;
-    stroke-width: 5%;
-    font-size: 200%;
-    font-family: 'Lato', sans-serif;
-}
-
-h2 {
-    text-align: center;
-    color: white;
-    stroke: black;
-    stroke-width: 10%;
-    text-shadow: #293341;
-    font-size: 100%;
-    font-family: 'Lato', sans-serif;
-}
-
-h3 {
-    text-align: center;
-    color: white;
-    stroke: aliceblue;
-    stroke-width: 5%;
-    font-size: 110%;
-    font-family: 'Lato', sans-serif;
-}
-
-h4 {
-    text-align: center;
-    color: white;
-    stroke: aliceblue;
-    stroke-width: 5%;
-    font-size: 75%;
-    font-family: 'Lato', sans-serif;
-}
-
-hr {
-    align-self: center;
-    width: 75%;
-    color: white;
-    stroke: aliceblue;
-}
-
-#market_cap_overview {
-    visibility: active;
-}
 
 .node:hover{
     stroke-width: 7px !important;

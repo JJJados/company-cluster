@@ -6,6 +6,8 @@
  * D3 Version 4 (accessed via http://d3js.org/d3.v4.min.js)
  */
 
+/* ------------------------------------ Line Graph -------------------------------- */
+
 /**
  * rowConverter converts a row of the historicalData
  * to the appropriate data types. 
@@ -97,16 +99,10 @@ let colorTicker2Line = function (color) {
  * @param ticker1 
  * @param ticker2 
  */
-let displayLineChart = function (ticker1, ticker2) {
-
-    console.log(ticker1, ticker2);
-
+let displayLineChart = function (ticker1, ticker2, data) {
     // Clear any existing images
     d3.select("#line-chart-canvas").html("");
 
-    // Parse the historical data 
-    d3.csv("src/historicalData.csv", rowConverter, function(data) {
-       
         // Initiate frequently used variables in this function 
         let width = 1000;
         let height = 400;
@@ -284,8 +280,153 @@ let displayLineChart = function (ticker1, ticker2) {
             return ticker2;
         })
         .style("fill", ticker2Color);
-    });
-};
+}
+
+let highlightRow = function(element) {
+    element.style("color", "yellow");
+}
+
+let insertMarketCap = function (ticker1Data, ticker2Data) {
+    let marketCap1 = ticker1Data.fundamental["MktCap (dollarsMil)"]
+    let ticker1 = d3.select("#ticker1-mark-cap").html("$" + marketCap1);
+
+    let marketCap2 = ticker2Data.fundamental["MktCap (dollarsMil)"]
+    let ticker2 = d3.select("#ticker2-mark-cap").html("$" + marketCap2);
+
+    let highlighted = ticker1;
+    if (marketCap2 > marketCap1) {
+        highlighted = ticker2;
+    }
+
+    highlightRow(highlighted);
+}
+
+let insertDivYield = function(ticker1Data, ticker2Data) {
+    let divYield1 = ticker1Data.dividend["Current Dividend"]
+    let ticker1 = d3.select("#ticker1-div-yield").html("$" + divYield1);
+
+    let divYield2 = ticker2Data.dividend["Current Dividend"]
+    let ticker2 = d3.select("#ticker2-div-yield").html("$" + divYield2);
+
+    let highlighted = ticker1;
+    if (divYield2 > divYield1) {
+        highlighted = ticker2;
+    }
+
+    highlightRow(highlighted);
+}
+
+let insertEps = function(ticker1Data, ticker2Data) {
+    let eps1 = ticker1Data.fundamental["EPS% Payout"]
+    let ticker1 = d3.select("#ticker1-eps").html(eps1.toFixed(2) +"%");
+
+    let eps2 = ticker2Data.fundamental["EPS% Payout"]
+    let ticker2 = d3.select("#ticker2-eps").html(eps2.toFixed(2) + "%");
+
+    let highlighted = ticker1;
+    if (eps2 > eps1) {
+        highlighted = ticker2;
+    }
+
+    highlightRow(highlighted);
+}
+
+let insertPe = function(ticker1Data, ticker2Data) {
+    let pe1 = ticker1Data.fundamental["TTM"]["P/E"]
+    let ticker1 = d3.select("#ticker1-pe").html(pe1.toFixed(2) +"%");
+
+    let pe2 = ticker2Data.fundamental["TTM"]["P/E"]
+    let ticker2 = d3.select("#ticker2-pe").html(pe2.toFixed(2) + "%");
+
+    let highlighted = ticker1;
+    if (pe2 < pe1) {
+        highlighted = ticker2;
+    }
+
+    highlightRow(highlighted);
+}
+
+let insertPeg = function(ticker1Data, ticker2Data) {
+    let peg1 = ticker1Data.fundamental["PEG"]
+    let ticker1 = d3.select("#ticker1-peg").html(peg1);
+
+    let peg2 = ticker2Data.fundamental["PEG"]
+    let ticker2 = d3.select("#ticker2-peg").html(peg2);
+
+    let highlighted = ticker1;
+    if (peg2 < peg1) {
+        highlighted = ticker2;
+    }
+
+    highlightRow(highlighted);
+}
+
+let insertStreak = function(ticker1Data, ticker2Data) {
+    let today = new Date();
+    let currentYear = today.getFullYear();
+
+    let streak1 = currentYear - ticker1Data.other["Streak Began"]
+    let ticker1 = d3.select("#ticker1-streak").html(streak1 + " years");
+
+    let streak2 = currentYear -  ticker2Data.other["Streak Began"]
+    let ticker2 = d3.select("#ticker2-streak").html(streak2 + " years");
+
+    let highlighted = ticker1;
+    if (streak2 > streak1) {
+        highlighted = ticker2;
+    }
+
+    highlightRow(highlighted);
+}
+
+let insertRor = function(ticker1Data, ticker2Data) {
+    let ror1 = ticker1Data.other["TTM ROA"]
+    let ticker1 = d3.select("#ticker1-ror").html(ror1.toFixed(2) + "%");
+
+    let ror2 = ticker2Data.other["TTM ROA"]
+    let ticker2 = d3.select("#ticker2-ror").html(ror2.toFixed(2) + "%");
+
+    let highlighted = ticker1;
+    if (ror2 > ror1) {
+        highlighted = ticker2;
+    }
+
+    highlightRow(highlighted);
+}
+
+let displayTable = function(ticker1, ticker2) {
+
+    d3.selectAll("td").style("color", "rgb(231, 231, 231)");
+
+    let ticker1Data;
+    let ticker2Data;
+
+    // Retrieve the applicable data
+    let dataRetrieved = 0;
+    for (let i = 0; dataRetrieved != 2 && i < dataset.length; i ++) {
+        let itemTicker = dataset[i].general["Ticker Symbol"];
+        if (itemTicker == ticker1) {
+            dataRetrieved++;
+            ticker1Data = dataset[i];
+        } else if (itemTicker == ticker2) {
+            dataRetrieved++;
+            ticker2Data = dataset[i];
+        }
+    }
+
+    insertMarketCap(ticker1Data, ticker2Data);
+    insertDivYield(ticker1Data, ticker2Data);
+    insertEps(ticker1Data, ticker2Data);
+    insertPe(ticker1Data, ticker2Data);
+    insertPeg(ticker1Data, ticker2Data);
+    insertStreak(ticker1Data, ticker2Data);
+    insertRor(ticker1Data, ticker2Data);
+
+
+   
+}
+
+/*-------------------------------- Generic ClickCompare Material -------------------------------- */
 
 // Referenced traffic collision example provided by Indratmo
 let parseYear;
@@ -297,6 +438,26 @@ let showClickCompare  = function () {
 
     parseYear = d3.timeParse("%Y");
     timeFormat = d3.timeFormat("%Y");
+    
+    // Include data in the table
+    d3.select("#column-ticker1").html(tickers[0]);
+    d3.select("#column-ticker2").html(tickers[1]);
 
-    displayLineChart(tickers[0], tickers[1]);
+    d3.csv("src/historicalData.csv", rowConverter, function(data) {
+        displayLineChart(tickers[0], tickers[1], data);    
+    });
+    
+    displayTable(tickers[0], tickers[1]);
 }
+
+// Currently not working
+let historicalData;
+let prepareClickCompareData = function () {
+    console.log("preparing data...")
+    d3.csv("src/historicalData.csv", rowConverter, function(data) {
+        console.log("data:", data);
+        historicalData = data;
+        console.log("historical data", historicalData);
+    });
+}
+

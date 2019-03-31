@@ -73,7 +73,7 @@ window.addEventListener('DOMContentLoaded', function (event) {
             .attr("width", 1000)
             .attr("height", 400);
 
-    //prepareClickCompareData();
+    createDefinitionTooltips();
     
 
     // Put in on drag? listeners and call update for the callback 

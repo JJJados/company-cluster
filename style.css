@@ -39,9 +39,7 @@ h4 {
 
 /*--------------------------------------------------------------*/
 #compare-table {
-  float: right;
-  margin-right: 50px;
-  margin-top: 50px;
+  display: inline-block;
   color: #e7e7e7;
   font-weight: bold;
   border: 3px solid #e7e7e7;
@@ -72,7 +70,7 @@ h4 {
 }
 
 /* Referenced textbook */
-#line-chart-tooltip {
+#line-chart-tooltip, #definition-tooltip {
   position: absolute;
   width: auto;
   height: auto;

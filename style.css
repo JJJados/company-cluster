@@ -43,7 +43,10 @@ h4 {
   color: white;
   stroke: aliceblue;
   stroke-width: 5%;
-  font-size: 75%;
+  font-size: 90%;
+  -webkit-text-stroke: 0.02px black;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 /* COMPARE TABLE -------------------------------------------------------------*/
@@ -110,6 +113,7 @@ h4 {
 
 #compare-button, #back-button {
   background-color: white;
+  border: 10px solid #889696;
 }
 
 #back-button {
@@ -127,6 +131,18 @@ h4 {
   opacity: 1 !important;
 }
 
+#overviewSliders {
+  display: inline-flex;
+  background-color: #889696;
+  border: 4px solid #293341;
+}
+
+#sliderLabels {
+  vertical-align: middle;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
 .buttonParent {
   display: flex;
   margin: 0 auto;
@@ -134,8 +150,7 @@ h4 {
 }
 
 button {
-  background-color: #4CAF50;
-  /* Green */
+  background-color: white;
   border: none;
   color: #293341;
   padding: 12px 24px;
@@ -157,7 +172,6 @@ button {
 
 .button1:hover {
   background-color: white;
-  /* Green */
   color: #293341;
   border: 4px solid #92b9bd;
 }
@@ -169,7 +183,6 @@ button {
 
 .button2:hover {
   background-color: white;
-  /* Green */
   color: #293341;
   border: 4px solid #a8d4ad;
 }
@@ -181,7 +194,6 @@ button {
 
 .button3:hover {
   background-color: white;
-  /* Green */
   color: #293341;
   border: 4px solid #e8ec67;
 }
@@ -193,7 +205,6 @@ button {
 
 .button4:hover {
   background-color: white;
-  /* Green */
   color: #293341;
   border: 4px solid #8e5572;
 }
@@ -205,7 +216,6 @@ button {
 
 .button5:hover {
   background-color: white;
-  /* Green */
   color: #293341;
   border: 4px solid #91f5ad;
 }
@@ -217,7 +227,6 @@ button {
 
 .button6:hover {
   background-color: white;
-  /* Green */
   color: #293341;
   border: 4px solid #745296;
 }
@@ -229,7 +238,6 @@ button {
 
 .button7:hover {
   background-color: white;
-  /* Green */
   color: #293341;
   border: 4px solid #ee6c4d;
 }
@@ -241,7 +249,6 @@ button {
 
 .button8:hover {
   background-color: white;
-  /* Green */
   color: #293341;
   border: 4px solid #4CAF50;
 }
@@ -253,7 +260,6 @@ button {
 
 .button9:hover {
   background-color: white;
-  /* Green */
   color: #293341;
   border: 4px solid #d4b483;
 }
@@ -265,7 +271,6 @@ button {
 
 .button10:hover {
   background-color: white;
-  /* Green */
   color: #293341;
   border: 4px solid #ff01fb;
 }
@@ -277,7 +282,6 @@ button {
 
 .button11:hover {
   background-color: white;
-  /* Green */
   color: #293341;
   border: 4px solid #f28123;
 }

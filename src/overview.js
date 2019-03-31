@@ -19,7 +19,13 @@ let sectors = ["Health Care", "Information Technology", "Financials",
     "Energy", "Utilities"
 ];
 
+// Filter values
 let currentSector = "Overview";
+let PEGValue = 0;
+let PEValue = 0;
+let EPSValue = 0;
+let streakValue = 0;
+let dividendValue = 0;
 
 // create a tooltip
 let Tooltip = d3.select("body")
@@ -42,6 +48,9 @@ let sectorButtonClick = function (evt) {
 d3.json(data_addr, function(error, data) {
     dataset = data.Contenders.data
         .concat(data.Champions.data.concat(data.Challengers.data))
+
+    // Sets min & max values for each slider
+    setSliderValues(dataset);
     displayOverview(dataset);
 })
 
@@ -214,12 +223,16 @@ let displayOverview = function (data) {
  * selected sector and the slider values
  */
 let update = function() {
-    // check sliders --> to do
+ 
     let newDataset = dataset.filter(function(d) {
         if (currentSector === "Overview") {
-            return true;
+            return d.fundamental["PEG"] >= PEGValue && d.fundamental["EPS% Payout"] >= EPSValue
+                && d.fundamental["TTM"]["P/E"] >= PEValue && d.dividend["Div Yield"] >= dividendValue
+                && d.general["No Yrs"] >= streakValue;
         }
-        return d.general.Sector === currentSector;
+        return d.general.Sector === currentSector && d.fundamental["PEG"] >= PEGValue 
+                && d.fundamental["EPS% Payout"] >= EPSValue && d.fundamental["TTM"]["P/E"] >= PEValue 
+                && d.dividend["Div Yield"] >= dividendValue && d.general["No Yrs"] >= streakValue;
     });
 
     displayOverview(newDataset);
@@ -252,4 +265,52 @@ let unhighlightCircle = function(circleElement) {
  */
 let selectCircle = function(circleElement) {
     circleElement.style("stroke", "white");
+}
+
+/**
+ * setSliderValues takes in the data and sets the
+ * min and max range values for each slider
+ * @param {*} data 
+ */
+let setSliderValues = function(data) {
+
+    d3.select("#peg-slider")
+        .attr("min", d3.min(data, function(d) {
+            return Math.round(d.fundamental["PEG"]);
+        }))
+        .attr("max", d3.max(data, function(d) {
+            return Math.round(d.fundamental["PEG"]);
+        }));
+
+    d3.select("#pe-slider")
+        .attr("min", d3.min(data, function(d) {
+            return Math.round(d.fundamental["TTM"]["P/E"]);
+        }))
+        .attr("max", d3.max(data, function(d) {
+            return Math.round(d.fundamental["TTM"]["P/E"]);
+        }));
+
+    d3.select("#eps-slider")
+        .attr("min", d3.min(data, function(d) {
+            return Math.round(d.fundamental["EPS% Payout"]);
+        }))
+        .attr("max", d3.max(data, function(d) {
+            return Math.round(d.fundamental["EPS% Payout"]);
+        }));
+
+    d3.select("#dividend-slider")
+        .attr("min", d3.min(data, function(d) {
+            return Math.round(d.dividend["Div Yield"]);
+        }))
+        .attr("max", d3.max(data, function(d) {
+            return Math.round(d.dividend["Div Yield"]);
+        }));
+
+    d3.select("#streak-slider")
+        .attr("min", d3.min(data, function(d) {
+            return Math.round(d.general["No Yrs"]);
+        }))
+        .attr("max", d3.max(data, function(d) {
+            return Math.round(d.general["No Yrs"]);
+        }));
 }

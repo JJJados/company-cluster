@@ -1,8 +1,15 @@
-/** 
- * This file incorporates all the main functions called that don't apply to a specific 
-*/
+/**
+ * File: main.js
+ * This file contains the functions initialize the
+ * Company Cluster visualization.
+ * 
+ * Authors: Jayden & Komal
+ */
 
-/*---------------------------------------- Helper Functions ---------------------------------- */
+/**
+ * hideOverview is used to hide the contents of the overview section
+ * tag and show the click and compare page. 
+ */
 let hideOverview = function () {
     let overviewPage = document.querySelector("#overview");
     overviewPage.className = "hidden";
@@ -11,6 +18,10 @@ let hideOverview = function () {
     clickComparePage.className = "visible";
 }
 
+/**
+ * hideClickCompare is used to hide the contents of the click and 
+ * compare section tag and show the overview  page.
+ */
 let hideClickCompare = function() {
     let clickComparePage = document.querySelector("#click-compare");
     clickComparePage.className = "hidden";
@@ -20,18 +31,29 @@ let hideClickCompare = function() {
     update();
 }
 
+/**
+ * showCompareButton shows the comparison button
+ * when two companies are clicked 
+ */
 let showCompareButton = function () {
     d3.select("#compare-button")
     .attr("class", "visible");
 }
 
+/**
+ * hideCompareButton hides the compare button when
+ * a company is de-selected
+ */
 let hideCompareButton = function () {
     d3.select("#compare-button")
     .attr("class", "hidden");
 }
 
+/**
+ * addEventListeners attaches event listeners on  
+ * buttons used throughout the visualization
+ */
 let addEventListeners= function () {
-    // Add event listener for click and compare
     d3.select("#compare-button")
         .on("click", function () {
             hideOverview();
@@ -53,11 +75,11 @@ let addEventListeners= function () {
 
 }
 
-
 // This variable will hold the ticker symbols of the selected circles. 
 let selectedTickers;
 
 window.addEventListener('DOMContentLoaded', function (event) {
+    // See selectedTickers.js for details
     selectedTickers = new SelectedTickers();
 
     addEventListeners();
@@ -73,8 +95,6 @@ window.addEventListener('DOMContentLoaded', function (event) {
             .attr("width", 1000)
             .attr("height", 400);
 
+    // See definitions.js for details 
     createDefinitionTooltips();
-    
-
-    // Put in on drag? listeners and call update for the callback 
 });

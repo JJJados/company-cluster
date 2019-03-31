@@ -1,9 +1,9 @@
 /**
- * Click & Compare Line Chart
+ * File: clickCompare.js
+ * This file contains the functions used to create the click 
+ * and compare page
  * 
- * Author: Komal Aheer
- * Data Source: DRiP Investing Resources
- * D3 Version 4 (accessed via http://d3js.org/d3.v4.min.js)
+ * Authors: Komal & Jayden
  */
 
 /* ------------------------------------ Line Graph -------------------------------- */
@@ -103,183 +103,183 @@ let displayLineChart = function (ticker1, ticker2, data) {
     // Clear any existing images
     d3.select("#line-chart-canvas").html("");
 
-        // Initiate frequently used variables in this function 
-        let width = 1000;
-        let height = 400;
-        let padding = 60;
+    // Initiate frequently used variables in this function 
+    let width = 1000;
+    let height = 400;
+    let padding = 60;
 
-        // Set colors
-        let ticker1Color = "#42f495";
-        let ticker1ColorLight = "#38b774";
-        let ticker2Color = "#ff56d7";
-        let ticker2ColorLight = "#b53d98"
-       
-        // Find maximum dividend yield of the companies of interest.
-        let ticker1Max = d3.max(data, function (d) { return d[ticker1] } );
-        let ticker2Max = d3.max(data, function (d) { return d[ticker2] } );
-        let max = ticker1Max;
-        if (ticker2Max > ticker1Max) {
-            max = ticker2Max;
-        } 
+    // Set colors
+    let ticker1Color = "#42f495";
+    let ticker1ColorLight = "#38b774";
+    let ticker2Color = "#ff56d7";
+    let ticker2ColorLight = "#b53d98"
+    
+    // Find maximum dividend yield of the companies of interest.
+    let ticker1Max = d3.max(data, function (d) { return d[ticker1] } );
+    let ticker2Max = d3.max(data, function (d) { return d[ticker2] } );
+    let max = ticker1Max;
+    if (ticker2Max > ticker1Max) {
+        max = ticker2Max;
+    } 
 
-        // Find the minimum and maxiumum year
-        let minYear = d3.min(data, function (d) { return d.year; });
-        let maxYear = d3.max(data, function (d) { return d.year; });
+    // Find the minimum and maxiumum year
+    let minYear = d3.min(data, function (d) { return d.year; });
+    let maxYear = d3.max(data, function (d) { return d.year; });
 
-        // Create a scale function for the y axis (div yield)
-        let yScale = d3.scaleLinear()
-                    .domain([0, max])
-                    .range([height - padding, padding]);
+    // Create a scale function for the y axis (div yield)
+    let yScale = d3.scaleLinear()
+                .domain([0, max])
+                .range([height - padding, padding]);
 
-        // Create a scale function for the x axis (year)
-        let xScale = d3.scaleTime()
-            .domain([minYear, maxYear])
-            .range([padding, width - padding]);
+    // Create a scale function for the x axis (year)
+    let xScale = d3.scaleTime()
+        .domain([minYear, maxYear])
+        .range([padding, width - padding]);
 
-        // Create function for generating x axis
-        let xAxis = d3.axisBottom()
-            .scale(xScale)
-            .ticks(20)
-            .tickFormat(timeFormat); // Referenced Indratmo's code
+    // Create function for generating x axis
+    let xAxis = d3.axisBottom()
+        .scale(xScale)
+        .ticks(20)
+        .tickFormat(timeFormat); // Referenced Indratmo's code
 
-        // Create function for generating y axis
-        // Referenced the following to include $ on y axis
-        // https://stackoverflow.com/questions/38111716/d3-js-nvd3-issue-display-the-dollar-sign-and-the-currency-format-in-the-toolti?rq=1
-        let yAxis = d3.axisLeft()
-            .scale(yScale)
-            .ticks(10)
-            .tickFormat(function (d) {
-                return "$" + d;
-            }); 
-        
-        // create the SVG to hold the graph 
-        let svg = d3.select("#line-chart-canvas");
-        
-        //Create X axis
-        svg.append("g")
-            .attr("class", "axis")
-            .attr("transform", "translate(0," + (height - padding) + ")")
-            .call(xAxis);
+    // Create function for generating y axis
+    // Referenced the following to include $ on y axis
+    // https://stackoverflow.com/questions/38111716/d3-js-nvd3-issue-display-the-dollar-sign-and-the-currency-format-in-the-toolti?rq=1
+    let yAxis = d3.axisLeft()
+        .scale(yScale)
+        .ticks(10)
+        .tickFormat(function (d) {
+            return "$" + d;
+        }); 
+    
+    // create the SVG to hold the graph 
+    let svg = d3.select("#line-chart-canvas");
+    
+    //Create X axis
+    svg.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(0," + (height - padding) + ")")
+        .call(xAxis);
 
-        //Create Y axis
-        svg.append("g")
-            .attr("class", "axis")
-            .attr("transform", "translate(" + (padding) + ",0)")
-            .call(yAxis);
+    //Create Y axis
+    svg.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(" + (padding) + ",0)")
+        .call(yAxis);
 
-        // Create the X axis title
-        svg.append("text")
-            .attr("class", "axisTitle")
-            .attr("transform", "translate(" + (width/2) + "," + (height-10) + ")")
-            .text("Years");
+    // Create the X axis title
+    svg.append("text")
+        .attr("class", "axisTitle")
+        .attr("transform", "translate(" + (width/2) + "," + (height-10) + ")")
+        .text("Years");
 
-        // Create the Y axis title
-        svg.append("text")
-            .attr("class", "axisTitle")
-            .attr("transform", "translate(25," + ((height/2)+50)  + ") rotate(-90)") //15
-            .text("Dividend Yield");
+    // Create the Y axis title
+    svg.append("text")
+        .attr("class", "axisTitle")
+        .attr("transform", "translate(25," + ((height/2)+50)  + ") rotate(-90)") //15
+        .text("Dividend Yield");
 
-        // Create the line generator function for ticker 1
-        let line1 = d3.line()
-                        .x(function (d) { return xScale(d.year); })
-                        .y(function (d) { return yScale(d[ticker1]); });
-        
-        // Render the line by adding it to the existing svg
-        svg.append("path")
-                .datum(data)
-                .attr("id", "ticker1line")
-                .attr("class", "line")
-                .attr("d", line1)
-                .style("stroke", ticker1Color)
-                // Include hover interaction
-                .on("mouseover", function () {colorTicker2Line(ticker2ColorLight)})
-                .on("mouseout", function () {colorTicker2Line(ticker2Color)});
-        
-        // Create the line generator for ticker2
-        let line2 = d3.line()
-                        .x(function (d) { return xScale(d.year); })
-                        .y(function (d) { return yScale(d[ticker2]); });
+    // Create the line generator function for ticker 1
+    let line1 = d3.line()
+                    .x(function (d) { return xScale(d.year); })
+                    .y(function (d) { return yScale(d[ticker1]); });
+    
+    // Render the line by adding it to the existing svg
+    svg.append("path")
+            .datum(data)
+            .attr("id", "ticker1line")
+            .attr("class", "line")
+            .attr("d", line1)
+            .style("stroke", ticker1Color)
+            // Include hover interaction
+            .on("mouseover", function () {colorTicker2Line(ticker2ColorLight)})
+            .on("mouseout", function () {colorTicker2Line(ticker2Color)});
+    
+    // Create the line generator for ticker2
+    let line2 = d3.line()
+                    .x(function (d) { return xScale(d.year); })
+                    .y(function (d) { return yScale(d[ticker2]); });
 
-        // Render the line by adding it to the existing svg
-        svg.append("path")
-                .datum(data)
-                .attr("id", "ticker2line")
-                .attr("class", "line")
-                .attr("d", line2)
-                .style("stroke", ticker2Color)
-                // Include hover interaction
-                .on("mouseover", function () {colorTicker1Line(ticker1ColorLight)})
-                .on("mouseout", function () {colorTicker1Line(ticker1Color)});
+    // Render the line by adding it to the existing svg
+    svg.append("path")
+            .datum(data)
+            .attr("id", "ticker2line")
+            .attr("class", "line")
+            .attr("d", line2)
+            .style("stroke", ticker2Color)
+            // Include hover interaction
+            .on("mouseover", function () {colorTicker1Line(ticker1ColorLight)})
+            .on("mouseout", function () {colorTicker1Line(ticker1Color)});
 
-        // Create circles for each year for ticker1
-        svg.selectAll("ticker1circles")
-            .data(data)
-            .enter()
-            .append("circle")
-            .attr("class", "ticker1circles")
-            .attr("cx", function (d) {
-                return xScale(d.year);
-            })
-            .attr("cy", function (d) {
-                return yScale(d[ticker1]);
-            })
-            .attr("r", "5")
-            .style("fill", ticker1Color)
-            // Create hover interactions
-            .on("mouseover", function (d){ 
-                showTooltip (d, ticker1); 
-                colorTicker2Line(ticker2ColorLight);
-            })
-            .on("mouseout", function() {
-                hideTooltip();
-                colorTicker2Line(ticker2Color);
-            });
-        
-        // Create circles for each year for ticker2
-        svg.selectAll("ticker2circles")
-            .data(data)
-            .enter()
-            .append("circle")
-            .attr("cx", function (d) {
-                return xScale(d.year);
-            })
-            .attr("cy", function (d) {
-                return yScale(d[ticker2]);
-            })
-            .attr("r", function () {
-                return 5;
-            })
-            .style("fill", ticker2Color)
-            .attr("class", "ticker2circles")
-            // Create hover interactions
-            .on("mouseover", function (d){ 
-                showTooltip (d, ticker2); 
-                colorTicker1Line(ticker1ColorLight);
-            })
-            .on("mouseout", function() {
-                hideTooltip();
-                colorTicker1Line(ticker1Color);
-            });
+    // Create circles for each year for ticker1
+    svg.selectAll("ticker1circles")
+        .data(data)
+        .enter()
+        .append("circle")
+        .attr("class", "ticker1circles")
+        .attr("cx", function (d) {
+            return xScale(d.year);
+        })
+        .attr("cy", function (d) {
+            return yScale(d[ticker1]);
+        })
+        .attr("r", "5")
+        .style("fill", ticker1Color)
+        // Create hover interactions
+        .on("mouseover", function (d){ 
+            showTooltip (d, ticker1); 
+            colorTicker2Line(ticker2ColorLight);
+        })
+        .on("mouseout", function() {
+            hideTooltip();
+            colorTicker2Line(ticker2Color);
+        });
+    
+    // Create circles for each year for ticker2
+    svg.selectAll("ticker2circles")
+        .data(data)
+        .enter()
+        .append("circle")
+        .attr("cx", function (d) {
+            return xScale(d.year);
+        })
+        .attr("cy", function (d) {
+            return yScale(d[ticker2]);
+        })
+        .attr("r", function () {
+            return 5;
+        })
+        .style("fill", ticker2Color)
+        .attr("class", "ticker2circles")
+        // Create hover interactions
+        .on("mouseover", function (d){ 
+            showTooltip (d, ticker2); 
+            colorTicker1Line(ticker1ColorLight);
+        })
+        .on("mouseout", function() {
+            hideTooltip();
+            colorTicker1Line(ticker1Color);
+        });
 
-        // Create a label for the ticker 1 line 
-        svg.append("text")
-            .attr("x", xScale(data[0].year) + 10)
-            .attr("y", yScale(data[0][ticker1]) + 5)
-            .attr("class", "label")
-            .text(function () {
-                return ticker1;
-            })
-            .style("fill", ticker1Color);
-        
-        // Create a label for the ticker 2 line 
-        svg.append("text")
+    // Create a label for the ticker 1 line 
+    svg.append("text")
         .attr("x", xScale(data[0].year) + 10)
-        .attr("y", yScale(data[0][ticker2]) + 5)
+        .attr("y", yScale(data[0][ticker1]) + 5)
         .attr("class", "label")
         .text(function () {
-            return ticker2;
+            return ticker1;
         })
-        .style("fill", ticker2Color);
+        .style("fill", ticker1Color);
+    
+    // Create a label for the ticker 2 line 
+    svg.append("text")
+    .attr("x", xScale(data[0].year) + 10)
+    .attr("y", yScale(data[0][ticker2]) + 5)
+    .attr("class", "label")
+    .text(function () {
+        return ticker2;
+    })
+    .style("fill", ticker2Color);
 }
 
 let highlightRow = function(element) {
@@ -444,7 +444,21 @@ let showClickCompare  = function () {
     d3.select("#column-ticker2").html(tickers[1]);
 
     d3.csv("src/historicalData.csv", rowConverter, function(data) {
-        displayLineChart(tickers[0], tickers[1], data);    
+        // Check if the data has the tickers in it. If not, print that no historical data is available. 
+        let row = data[0];
+        if (row.hasOwnProperty(tickers[0]) && row.hasOwnProperty(tickers[1])) {
+            displayLineChart(tickers[0], tickers[1], data); 
+        } else {
+            let svg = d3.select("#line-chart-canvas");
+            svg.html("");
+            // Create the X axis title
+            svg.append("text")
+            .attr("transform", "translate(300,200)")
+            .text("No Historical Data to Display.")
+            .style("stroke", "white")
+            .style("fill", "white");
+
+        }
     });
     
     displayTable(tickers[0], tickers[1]);

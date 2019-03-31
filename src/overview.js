@@ -1,3 +1,11 @@
+/**
+ * File: overview.js
+ * This file contains the functions used to create and
+ * maintain the overview visualization
+ * 
+ * Authors: Jayden & Komal
+ */
+
 // radius used to create forced border
 let radius = 25;
 let width = window.innerWidth;
@@ -30,6 +38,7 @@ let sectorButtonClick = function (evt) {
     selectedTickers.destroy();
 }
 
+// Retrieve the data from Brent's api and store it in the dataset variable 
 d3.json(data_addr, function(error, data) {
     dataset = data.Contenders.data
         .concat(data.Champions.data.concat(data.Challengers.data))
@@ -200,6 +209,10 @@ let displayOverview = function (data) {
 
 }
 
+/**
+ * update regenerates the visualization based on the 
+ * selected sector and the slider values
+ */
 let update = function() {
     // check sliders --> to do
     let newDataset = dataset.filter(function(d) {

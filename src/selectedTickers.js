@@ -1,3 +1,9 @@
+/**
+ * File: selectedTickers.js
+ * This file contains the outline for the SelectedTickers class.
+ * 
+ * Authors: Komal & Jayden
+ */
 
 /**
  * This class is used to manage the list of selected tickers
@@ -32,10 +38,12 @@ class SelectedTickers {
         }
     }
  
+    // Determines if we've reached a max of 2 tickers
     isFull() {
      return this.tickers.length == 2;
     }
  
+    // Checks if the provided ticker is in the array
     contains(selectedTicker) {
         for (let ticker of this.tickers) {
             if (ticker === selectedTicker) {
@@ -45,8 +53,9 @@ class SelectedTickers {
         return false;
     }
  
+    // Remove all selected tickers
     destroy() {
         this.tickers = [];
     }
- 
+
  }

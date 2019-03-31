@@ -32,11 +32,15 @@ let Tooltip = d3.select("body")
     .append("div")
     .style("opacity", 0)
     .attr("id", "overview-tooltip")
-    .style("background-color", "white")
-    .style("border", "solid")
-    .style("border-width", "2px")
-    .style("border-radius", "5px")
+    .style("width", "auto")
+    .style("height", "auto")
+    .style("background-color", "black")
+    .style("border-radius", "10px")
     .style("padding", "5px")
+    .style("box-shadow", "4px 4px 10px rgba(0, 0, 0, 0.4)")
+    .style("color", "white")
+    .style("font-family", "helvetica, arial, sans-serif")
+    .style("pointer-events", "none");
 
 let sectorButtonClick = function (evt) {
     currentSector = evt.target.innerText;
@@ -88,7 +92,7 @@ let displayOverview = function (data) {
         d.fy = d3.event.y;
     }
 
-    // Three function that change the tooltip when user hover / move / leave a cell
+    // This function that change the tooltip when user hover / move / leave a cell
     let mouseover = function (d) {
         Tooltip
             .style("opacity", 1);
@@ -119,11 +123,14 @@ let displayOverview = function (data) {
      */
     let mousemove = function (d) {
         Tooltip
-            .html(d.general["Company Name"] + "<br /> Market Cap in Millions: $" +
-                d.fundamental["MktCap (dollarsMil)"] + "<br /> Est 5yr. Growth: " +
-                d.fundamental["Est-5yr Growth"] + "<br /> Past 5yr. Growth: " +
-                d.fundamental["Past 5yr Growth"] + "<br /> PEG: " +
-                d.fundamental["PEG"])
+            .html(d.general["Company Name"] + "<br /> <br /> Market Cap in Millions: $" +
+                d.fundamental["MktCap (dollarsMil)"].toFixed(2) + "<br /> Est 5yr. Growth: " +
+                d.fundamental["Est-5yr Growth"].toFixed(2) + "<br /> Past 5yr. Growth: " +
+                d.fundamental["Past 5yr Growth"].toFixed(2) + "<br /> PEG: " +
+                d.fundamental["PEG"].toFixed(2) + "<br /> P/E: " + d.fundamental["TTM"]["P/E"].toFixed(2) +
+                "<br /> EPS% Payout: " + d.fundamental["EPS% Payout"].toFixed(2) + 
+                "<br /> Dividend Yield: " + d.dividend["Div Yield"].toFixed(2) + 
+                "<br /> Streak Years: "+ d.general["No Yrs"].toFixed(2))
             .attr("data-html", "true")
             .style("position", "absolute")
             .style("left", (d3.event.pageX + 5) + "px")

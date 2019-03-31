@@ -201,6 +201,7 @@ let displayOverview = function (data) {
 }
 
 let update = function() {
+    // check sliders --> to do
     let newDataset = dataset.filter(function(d) {
         if (currentSector === "Overview") {
             return true;

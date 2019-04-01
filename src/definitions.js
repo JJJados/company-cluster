@@ -55,12 +55,17 @@ let createDefinitionTooltips = function () {
     definitionElements.set("#column-peg", "PEG");
     definitionElements.set("#column-streak", "Streak");
     definitionElements.set("#column-ror", "Rate of Return");
+    definitionElements.set("#label-peg", "PEG");
+    definitionElements.set("#label-pe", "PE");
+    definitionElements.set("#label-eps", "EPS");
+    definitionElements.set("#label-streak", "Streak");
+    definitionElements.set("#label-div-yield", "Dividend Yield");
 
     // Add the hover interactions
     for (let key of definitionElements.keys()) {
         d3.select(key)
             .on("mouseover", function () {
-                showDefinitionTooltip(definitionElements.get(key), definitions[key]);
+                showDefinitionTooltip(definitions[definitionElements.get("#" + this.id)]);
             })
             .on("mouseout", hideDefinitionTooltip)
     }

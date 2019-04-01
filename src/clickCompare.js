@@ -288,7 +288,7 @@ let highlightRow = function(element) {
 
 let insertMarketCap = function (ticker1Data, ticker2Data) {
     let marketCap1 = ticker1Data.fundamental["MktCap (dollarsMil)"]
-    let ticker1 = d3.select("#ticker1-mark-cap").html("$" + marketCap1);
+    let ticker1 = d3.select("#ticker1-mark-cap").html("$" + marketCap1.toFixed(0));
 
     let marketCap2 = ticker2Data.fundamental["MktCap (dollarsMil)"]
     let ticker2 = d3.select("#ticker2-mark-cap").html("$" + marketCap2);

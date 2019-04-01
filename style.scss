@@ -96,7 +96,9 @@ h4 {
 }
 
 #definition-tooltip {
+    width: 300px;
     @extend #line-chart-tooltip;
+
 }
 
 #line-chart {

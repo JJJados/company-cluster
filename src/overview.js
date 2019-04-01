@@ -45,7 +45,6 @@ let Tooltip = d3.select("body")
 let sectorButtonClick = function (evt) {
     currentSector = evt.target.innerText;
     update();
-    selectedTickers.destroy();
 }
 
 // Retrieve the data from Brent's api and store it in the dataset variable 
@@ -230,7 +229,7 @@ let displayOverview = function (data) {
  * selected sector and the slider values
  */
 let update = function() {
- 
+    
     let newDataset = dataset.filter(function(d) {
         if (currentSector === "Overview") {
             return d.fundamental["PEG"] >= PEGValue && d.fundamental["EPS% Payout"] >= EPSValue
@@ -241,7 +240,7 @@ let update = function() {
                 && d.fundamental["EPS% Payout"] >= EPSValue && d.fundamental["TTM"]["P/E"] >= PEValue 
                 && d.dividend["Div Yield"] >= dividendValue && d.general["No Yrs"] >= streakValue;
     });
-
+    selectedTickers.destroy();
     displayOverview(newDataset);
 }
 

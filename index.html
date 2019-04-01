@@ -15,7 +15,7 @@
         </div>
 
         <section id="overview">
-            <h3>Company Cluster Visualization</h3>
+            <h1>Company Cluster Visualization</h1>
             <div class="overviewButtons">
                 <button class="button0">Overview</button>
                 <button class="button1">Health Care</button>
@@ -32,9 +32,31 @@
                 <button class="button10">Energy</button> 
                 <button class="button11">Utilities</button> 
             </div>
-            <button id="compare-button" class="hidden">
-                Compare
-            </button>
+            <div id="overviewSliders">
+                <button id="compare-button" class="hidden">
+                        Compare
+                </button>
+                <div class="sliderLabels">
+                    <h4>PEG: <span id="curPEGValue">N/A</span></h4>
+                    <input  type="range" name="PEG" step = ".25" id = "peg-slider">
+                </div>
+                <div class="sliderLabels">
+                    <h4>PE: <span id="curPEValue">N/A</span></h4>
+                    <input  type="range" name="PE" step = ".25" id = "pe-slider">
+                </div>
+                <div class="sliderLabels">
+                    <h4>EPS: <span id="curEPSValue">N/A</span></h4>
+                    <input  type="range" name="EPS" step = ".25" id = "eps-slider">
+                </div>
+                <div class="sliderLabels">
+                    <h4>Streak Years: <span id="curStreakValue">N/A</span></h4>
+                    <input  type="range" name="Streak Years" step = ".25" id = "streak-slider">
+                </div>
+                <div class="sliderLabels">
+                    <h4>Dividend Yield: <span id="curDivValue">N/A</span></h4>
+                    <input  type="range" name="Dividend Yield" step = ".25" id = "dividend-slider">
+                </div>
+            </div>
             <br>
             <div id="market_cap_overview">
                 <svg id="overview-canvas"></svg>

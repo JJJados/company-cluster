@@ -19,18 +19,28 @@ let sectors = ["Health Care", "Information Technology", "Financials",
     "Energy", "Utilities"
 ];
 
+// Filter values
 let currentSector = "Overview";
+let PEGValue = 0;
+let PEValue = 0;
+let EPSValue = 0;
+let streakValue = 0;
+let dividendValue = 0;
 
 // create a tooltip
 let Tooltip = d3.select("body")
     .append("div")
     .style("opacity", 0)
     .attr("id", "overview-tooltip")
-    .style("background-color", "white")
-    .style("border", "solid")
-    .style("border-width", "2px")
-    .style("border-radius", "5px")
+    .style("width", "auto")
+    .style("height", "auto")
+    .style("background-color", "black")
+    .style("border-radius", "10px")
     .style("padding", "5px")
+    .style("box-shadow", "4px 4px 10px rgba(0, 0, 0, 0.4)")
+    .style("color", "white")
+    .style("font-family", "helvetica, arial, sans-serif")
+    .style("pointer-events", "none");
 
 let sectorButtonClick = function (evt) {
     currentSector = evt.target.innerText;
@@ -42,6 +52,9 @@ let sectorButtonClick = function (evt) {
 d3.json(data_addr, function(error, data) {
     dataset = data.Contenders.data
         .concat(data.Champions.data.concat(data.Challengers.data))
+
+    // Sets min & max values for each slider
+    setSliderValues(dataset);
     displayOverview(dataset);
 })
 
@@ -79,7 +92,7 @@ let displayOverview = function (data) {
         d.fy = d3.event.y;
     }
 
-    // Three function that change the tooltip when user hover / move / leave a cell
+    // This function that change the tooltip when user hover / move / leave a cell
     let mouseover = function (d) {
         Tooltip
             .style("opacity", 1);
@@ -110,11 +123,14 @@ let displayOverview = function (data) {
      */
     let mousemove = function (d) {
         Tooltip
-            .html(d.general["Company Name"] + "<br /> Market Cap in Millions: $" +
-                d.fundamental["MktCap (dollarsMil)"] + "<br /> Est 5yr. Growth: " +
-                d.fundamental["Est-5yr Growth"] + "<br /> Past 5yr. Growth: " +
-                d.fundamental["Past 5yr Growth"] + "<br /> PEG: " +
-                d.fundamental["PEG"])
+            .html(d.general["Company Name"] + "<br /> <br /> Market Cap in Millions: $" +
+                d.fundamental["MktCap (dollarsMil)"].toFixed(2) + "<br /> Est 5yr. Growth: " +
+                d.fundamental["Est-5yr Growth"].toFixed(2) + "<br /> Past 5yr. Growth: " +
+                d.fundamental["Past 5yr Growth"].toFixed(2) + "<br /> PEG: " +
+                d.fundamental["PEG"].toFixed(2) + "<br /> P/E: " + d.fundamental["TTM"]["P/E"].toFixed(2) +
+                "<br /> EPS% Payout: " + d.fundamental["EPS% Payout"].toFixed(2) + 
+                "<br /> Dividend Yield: " + d.dividend["Div Yield"].toFixed(2) + 
+                "<br /> Streak Years: "+ d.general["No Yrs"].toFixed(2))
             .attr("data-html", "true")
             .style("position", "absolute")
             .style("left", (d3.event.pageX + 5) + "px")
@@ -214,12 +230,16 @@ let displayOverview = function (data) {
  * selected sector and the slider values
  */
 let update = function() {
-    // check sliders --> to do
+ 
     let newDataset = dataset.filter(function(d) {
         if (currentSector === "Overview") {
-            return true;
+            return d.fundamental["PEG"] >= PEGValue && d.fundamental["EPS% Payout"] >= EPSValue
+                && d.fundamental["TTM"]["P/E"] >= PEValue && d.dividend["Div Yield"] >= dividendValue
+                && d.general["No Yrs"] >= streakValue;
         }
-        return d.general.Sector === currentSector;
+        return d.general.Sector === currentSector && d.fundamental["PEG"] >= PEGValue 
+                && d.fundamental["EPS% Payout"] >= EPSValue && d.fundamental["TTM"]["P/E"] >= PEValue 
+                && d.dividend["Div Yield"] >= dividendValue && d.general["No Yrs"] >= streakValue;
     });
 
     displayOverview(newDataset);
@@ -252,4 +272,52 @@ let unhighlightCircle = function(circleElement) {
  */
 let selectCircle = function(circleElement) {
     circleElement.style("stroke", "white");
+}
+
+/**
+ * setSliderValues takes in the data and sets the
+ * min and max range values for each slider
+ * @param {*} data 
+ */
+let setSliderValues = function(data) {
+
+    d3.select("#peg-slider")
+        .attr("min", d3.min(data, function(d) {
+            return Math.round(d.fundamental["PEG"]);
+        }))
+        .attr("max", d3.max(data, function(d) {
+            return Math.round(d.fundamental["PEG"]);
+        }));
+
+    d3.select("#pe-slider")
+        .attr("min", d3.min(data, function(d) {
+            return Math.round(d.fundamental["TTM"]["P/E"]);
+        }))
+        .attr("max", d3.max(data, function(d) {
+            return Math.round(d.fundamental["TTM"]["P/E"]);
+        }));
+
+    d3.select("#eps-slider")
+        .attr("min", d3.min(data, function(d) {
+            return Math.round(d.fundamental["EPS% Payout"]);
+        }))
+        .attr("max", d3.max(data, function(d) {
+            return Math.round(d.fundamental["EPS% Payout"]);
+        }));
+
+    d3.select("#dividend-slider")
+        .attr("min", d3.min(data, function(d) {
+            return Math.round(d.dividend["Div Yield"]);
+        }))
+        .attr("max", d3.max(data, function(d) {
+            return Math.round(d.dividend["Div Yield"]);
+        }));
+
+    d3.select("#streak-slider")
+        .attr("min", d3.min(data, function(d) {
+            return Math.round(d.general["No Yrs"]);
+        }))
+        .attr("max", d3.max(data, function(d) {
+            return Math.round(d.general["No Yrs"]);
+        }));
 }

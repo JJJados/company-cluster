@@ -51,7 +51,7 @@ let hideCompareButton = function () {
 
 /**
  * addEventListeners attaches event listeners on  
- * buttons used throughout the visualization
+ * buttons and sliders used throughout the visualization
  */
 let addEventListeners= function () {
     d3.select("#compare-button")
@@ -67,12 +67,41 @@ let addEventListeners= function () {
             hideCompareButton();
         });
 
+    d3.select("#peg-slider").on("change", function(d) {
+        PEGValue = this.value;
+        d3.select("#curPEGValue").html(PEGValue);
+        update();
+    });
+
+    d3.select("#pe-slider").on("change", function(d) {
+        PEValue = this.value;
+        d3.select("#curPEValue").html(PEValue);
+        update();
+    });
+
+    d3.select("#eps-slider").on("change", function(d) {
+        EPSValue = this.value;
+        d3.select("#curEPSValue").html(EPSValue);
+        update();
+    });
+
+    d3.select("#streak-slider").on("change", function(d) {
+        streakValue = this.value;
+        d3.select("#curStreakValue").html(streakValue);
+        update();
+    });
+
+    d3.select("#dividend-slider").on("change", function(d) {
+        dividendValue = this.value;
+        d3.select("#curDivValue").html(dividendValue);
+        update();
+    });
+
     /* Add event listeners to each of the sector buttons to filter the overview accordingly  */
     sectorButtons = document.querySelectorAll(".overviewButtons button");
     for (let button of sectorButtons) {
         button.addEventListener("click", sectorButtonClick);
     }
-
 }
 
 // This variable will hold the ticker symbols of the selected circles. 

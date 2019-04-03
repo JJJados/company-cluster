@@ -293,12 +293,15 @@ let insertMarketCap = function (ticker1Data, ticker2Data) {
     let marketCap2 = ticker2Data.fundamental["MktCap (dollarsMil)"]
     let ticker2 = d3.select("#ticker2-mark-cap").html("$" + marketCap2);
 
-    let highlighted = ticker1;
-    if (marketCap2 > marketCap1) {
-        highlighted = ticker2;
+    if(marketCap1 === marketCap2) {
+        highlightRow(ticker1);
+        highlightRow(ticker2);
     }
-
-    highlightRow(highlighted);
+    else if (marketCap2 > marketCap1) {
+        highlightRow(ticker2);
+    } else if (marketCap1 > marketCap2) {
+        highlightRow(ticker1);
+    }
 }
 
 let insertDivYield = function(ticker1Data, ticker2Data) {
@@ -308,12 +311,11 @@ let insertDivYield = function(ticker1Data, ticker2Data) {
     let divYield2 = ticker2Data.dividend["Current Dividend"]
     let ticker2 = d3.select("#ticker2-div-yield").html("$" + divYield2);
 
-    let highlighted = ticker1;
     if (divYield2 > divYield1) {
-        highlighted = ticker2;
+        highlightRow(ticker2);
+    } else if (divYield2 < divYield1) {
+        highlightRow(ticker1);
     }
-
-    highlightRow(highlighted);
 }
 
 let insertEps = function(ticker1Data, ticker2Data) {
@@ -323,12 +325,11 @@ let insertEps = function(ticker1Data, ticker2Data) {
     let eps2 = ticker2Data.fundamental["EPS% Payout"]
     let ticker2 = d3.select("#ticker2-eps").html(eps2.toFixed(2) + "%");
 
-    let highlighted = ticker1;
-    if (eps2 > eps1) {
-        highlighted = ticker2;
+    if (eps2 < eps1) {
+        highlightRow(ticker2);
+    } else if (eps2 > eps1) {
+        highlightRow(ticker1);
     }
-
-    highlightRow(highlighted);
 }
 
 let insertPe = function(ticker1Data, ticker2Data) {
@@ -338,12 +339,11 @@ let insertPe = function(ticker1Data, ticker2Data) {
     let pe2 = ticker2Data.fundamental["TTM"]["P/E"]
     let ticker2 = d3.select("#ticker2-pe").html(pe2.toFixed(2));
 
-    let highlighted = ticker1;
     if (pe2 < pe1) {
-        highlighted = ticker2;
+        highlightRow(ticker2);
+    } else if (pe2 > pe1) {
+        highlightRow(ticker1);
     }
-
-    highlightRow(highlighted);
 }
 
 let insertPeg = function(ticker1Data, ticker2Data) {
@@ -353,12 +353,11 @@ let insertPeg = function(ticker1Data, ticker2Data) {
     let peg2 = ticker2Data.fundamental["PEG"]
     let ticker2 = d3.select("#ticker2-peg").html(peg2);
 
-    let highlighted = ticker1;
     if (peg2 < peg1) {
-        highlighted = ticker2;
+        highlightRow(ticker2);
+    } else if (peg1 < peg2) {
+        highlightRow(ticker1);
     }
-
-    highlightRow(highlighted);
 }
 
 let insertStreak = function(ticker1Data, ticker2Data) {
@@ -371,12 +370,11 @@ let insertStreak = function(ticker1Data, ticker2Data) {
     let streak2 = currentYear -  ticker2Data.other["Streak Began"]
     let ticker2 = d3.select("#ticker2-streak").html(streak2 + " years");
 
-    let highlighted = ticker1;
     if (streak2 > streak1) {
-        highlighted = ticker2;
+        highlightRow(ticker2);
+    } else if (streak1 > streak2) {
+        highlightRow(ticker1);
     }
-
-    highlightRow(highlighted);
 }
 
 let insertRor = function(ticker1Data, ticker2Data) {
@@ -386,12 +384,11 @@ let insertRor = function(ticker1Data, ticker2Data) {
     let ror2 = ticker2Data.other["TTM ROA"]
     let ticker2 = d3.select("#ticker2-ror").html(ror2.toFixed(2) + "%");
 
-    let highlighted = ticker1;
     if (ror2 > ror1) {
-        highlighted = ticker2;
+        highlightRow(ticker2);
+    } else if (ror1 > ror2) {
+        highlightRow(ticker1);
     }
-
-    highlightRow(highlighted);
 }
 
 let displayTable = function(ticker1, ticker2) {
@@ -421,9 +418,6 @@ let displayTable = function(ticker1, ticker2) {
     insertPeg(ticker1Data, ticker2Data);
     insertStreak(ticker1Data, ticker2Data);
     insertRor(ticker1Data, ticker2Data);
-
-
-   
 }
 
 /*-------------------------------- Generic ClickCompare Material -------------------------------- */

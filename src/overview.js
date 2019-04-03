@@ -345,8 +345,8 @@ let setSliderValues = function(data) {
             return Math.round(d.dividend["Div Yield"]);
         }));
 
-    d3.select("#div-min").html(d3.select("#dividend-slider").attr("min"));
-    d3.select("#div-max").html(d3.select("#dividend-slider").attr("max"));
+    d3.select("#div-min").html("$" + d3.select("#dividend-slider").attr("min"));
+    d3.select("#div-max").html("$" + d3.select("#dividend-slider").attr("max"));
 
     d3.select("#streak-slider")
         .attr("min", d3.min(data, function(d) {

@@ -82,28 +82,33 @@ let getDefinitions = function () {
     let definitions = {};
 
     definitions["Market Cap"] = 
-    `Market capitalization refers to the total dollar market value of a company's outstanding shares.`;
+    `Market capitalization refers to the total dollar market value of a company's outstanding shares. (Source: https://www.Investopedia.com)`;
     
-    definitions["EPS"] = 
-    `Earnings Per Share (EPS) refers to the portion of a company's profit allocated to each share of common stock. 
-    The earnings per share value is calculated as the net income (AKA profits or earnings) divided by the available shares`;
+    definitions["EPS"] = 						
+    `Earnings Per Share Percent Payout refers to the annual dividend as a percentage of the trailing 12 months Earnings Per Share 
+    (EPS). EPS refers to the portion of a company's profit allocated to each share of common stock. 
+    The earnings per share value is calculated as the net income (AKA profits or earnings) divided by the available shares 
+    (Source: https://www.Investopedia.com & DRiP Investing)`;
     
     definitions["Dividend Yield"] = 
-    `Dividend Yield is calculated by taking the amount dividends earned annually and dividing it by its share price.`;
+    `Dividend Yield is calculated by taking the amount of dividends earned annually and dividing it by its share price. (Source: https://www.Investopedia.com)`;
     
     definitions["PE"] = 
     `Price-To-Earnings Ratio (P/E Ratio) is the ratio for valuing a company that measures its current share price 
-    relative to its per-share earnings (EPS). It's calculated by dividing the Market Value per Share by the EPS.`;
+    relative to its per-share earnings (EPS). It's calculated by dividing the Market Value per Share by the EPS.
+    (Source: https://www.Investopedia.com)`;
     
     definitions["PEG"] = 
-    `Price-Earnings-to-Growth Ratio (PEG) is a stock's PE ratio divided by the growth rate of its earnings`;
+    `Price-Earnings-to-Growth Ratio (PEG) is a stock's PE ratio divided by the growth rate of its earnings. 
+    (Source: https://www.Investopedia.com)`;
     
     definitions["Streak"] = 
-    `Streak refers to the number of years that a company has been experiencing an annual increase in dividend yields`;
+    `Streak refers to the number of years that a company has been experiencing an annual increase in dividend yields
+    (Source: DRiP Investing)`;
     
     definitions["Rate of Return"] = 
     `A rate of return (RoR) is the net gain or loss on an investment over a specified time period, expressed as 
-    a percentage of the investment’s initial cost. `;
+    a percentage of the investment’s initial cost. (Source: https://www.Investopedia.com)`;
 
     return definitions;
 }

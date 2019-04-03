@@ -128,8 +128,8 @@ let displayOverview = function (data) {
             Math.round(d.fundamental["Past 5yr Growth"]) + "<br /> PEG: " +
             Math.round(d.fundamental["PEG"]) + "<br /> P/E: " + Math.round(d.fundamental["TTM"]["P/E"]) +
             "<br /> EPS% Payout: " + Math.round(d.fundamental["EPS% Payout"]) + 
-            "<br /> Dividend Yield: " + Math.round(d.dividend["Div Yield"]) + 
-            "<br /> Streak Years: "+ Math.round(d.general["No Yrs"]))
+            "%<br /> Dividend Yield: " + Math.round(d.dividend["Div Yield"]) + 
+            "<br /> Streak Years: "+ Math.round(d.general["No Yrs"]) + " yrs.")
         .attr("data-html", "true")
         .style("position", "absolute")
         .style("left", (d3.event.pageX + 5) + "px")

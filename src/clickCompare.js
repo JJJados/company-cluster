@@ -294,7 +294,7 @@ let insertMarketCap = function (ticker1Data, ticker2Data) {
     let ticker2 = d3.select("#ticker2-mark-cap").html("$" + marketCap2);
 
     let highlighted = ticker1;
-    if (marketCap2 > marketCap1 || isNaN(marketCap1)) {
+    if (marketCap2 > marketCap1) {
         highlighted = ticker2;
     }
 
@@ -309,7 +309,7 @@ let insertDivYield = function(ticker1Data, ticker2Data) {
     let ticker2 = d3.select("#ticker2-div-yield").html("$" + divYield2);
 
     let highlighted = ticker1;
-    if (divYield2 > divYield1 || isNaN(divYield1)) {
+    if (divYield2 > divYield1) {
         highlighted = ticker2;
     }
 
@@ -324,7 +324,7 @@ let insertEps = function(ticker1Data, ticker2Data) {
     let ticker2 = d3.select("#ticker2-eps").html(eps2.toFixed(2) + "%");
 
     let highlighted = ticker1;
-    if (eps2 > eps1 || isNaN(eps1)) {
+    if (eps2 > eps1) {
         highlighted = ticker2;
     }
 
@@ -339,7 +339,7 @@ let insertPe = function(ticker1Data, ticker2Data) {
     let ticker2 = d3.select("#ticker2-pe").html(pe2.toFixed(2));
 
     let highlighted = ticker1;
-    if (pe2 < pe1 || isNaN(pe1)) {
+    if (pe2 < pe1) {
         highlighted = ticker2;
     }
 
@@ -354,7 +354,7 @@ let insertPeg = function(ticker1Data, ticker2Data) {
     let ticker2 = d3.select("#ticker2-peg").html(peg2);
 
     let highlighted = ticker1;
-    if (peg2 < peg1 || isNaN(peg1)) {
+    if (peg2 < peg1) {
         highlighted = ticker2;
     }
 
@@ -372,7 +372,7 @@ let insertStreak = function(ticker1Data, ticker2Data) {
     let ticker2 = d3.select("#ticker2-streak").html(streak2 + " years");
 
     let highlighted = ticker1;
-    if (streak2 > streak1 || isNaN(streak1)) {
+    if (streak2 > streak1) {
         highlighted = ticker2;
     }
 
@@ -387,7 +387,7 @@ let insertRor = function(ticker1Data, ticker2Data) {
     let ticker2 = d3.select("#ticker2-ror").html(ror2.toFixed(2) + "%");
 
     let highlighted = ticker1;
-    if (ror2 > ror1 || isNaN(ror1)) {
+    if (ror2 > ror1) {
         highlighted = ticker2;
     }
 

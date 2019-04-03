@@ -334,8 +334,8 @@ let setSliderValues = function(data) {
             return Math.round(d.fundamental["EPS% Payout"]);
         }));
 
-    d3.select("#eps-min").html(d3.select("#eps-slider").attr("min"));
-    d3.select("#eps-max").html(d3.select("#eps-slider").attr("max"));
+    d3.select("#eps-min").html(d3.select("#eps-slider").attr("min") + "%");
+    d3.select("#eps-max").html(d3.select("#eps-slider").attr("max") + "%");
 
     d3.select("#dividend-slider")
         .attr("min", d3.min(data, function(d) {

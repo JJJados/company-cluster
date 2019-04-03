@@ -333,10 +333,10 @@ let insertEps = function(ticker1Data, ticker2Data) {
 
 let insertPe = function(ticker1Data, ticker2Data) {
     let pe1 = ticker1Data.fundamental["TTM"]["P/E"]
-    let ticker1 = d3.select("#ticker1-pe").html(pe1.toFixed(2) +"%");
+    let ticker1 = d3.select("#ticker1-pe").html(pe1.toFixed(2));
 
     let pe2 = ticker2Data.fundamental["TTM"]["P/E"]
-    let ticker2 = d3.select("#ticker2-pe").html(pe2.toFixed(2) + "%");
+    let ticker2 = d3.select("#ticker2-pe").html(pe2.toFixed(2));
 
     let highlighted = ticker1;
     if (pe2 < pe1) {

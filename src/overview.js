@@ -122,18 +122,18 @@ let displayOverview = function (data) {
      */
     let mousemove = function (d) {
         Tooltip
-            .html(d.general["Company Name"] + "<br /> <br /> Market Cap in Millions: $" +
-                d.fundamental["MktCap (dollarsMil)"].toFixed(2) + "<br /> Est 5yr. Growth: " +
-                d.fundamental["Est-5yr Growth"].toFixed(2) + "<br /> Past 5yr. Growth: " +
-                d.fundamental["Past 5yr Growth"].toFixed(2) + "<br /> PEG: " +
-                d.fundamental["PEG"].toFixed(2) + "<br /> P/E: " + d.fundamental["TTM"]["P/E"].toFixed(2) +
-                "<br /> EPS% Payout: " + d.fundamental["EPS% Payout"].toFixed(2) + 
-                "<br /> Dividend Yield: " + d.dividend["Div Yield"].toFixed(2) + 
-                "<br /> Streak Years: "+ d.general["No Yrs"].toFixed(2))
-            .attr("data-html", "true")
-            .style("position", "absolute")
-            .style("left", (d3.event.pageX + 5) + "px")
-            .style("top", (d3.event.pageY) + "px")
+        .html(d.general["Company Name"] + "<br /> <br /> Market Cap in Millions: $" +
+            Math.round(d.fundamental["MktCap (dollarsMil)"]) + "<br /> Est 5yr. Growth: " +
+            Math.round(d.fundamental["Est-5yr Growth"]) + "<br /> Past 5yr. Growth: " +
+            Math.round(d.fundamental["Past 5yr Growth"]) + "<br /> PEG: " +
+            Math.round(d.fundamental["PEG"]) + "<br /> P/E: " + Math.round(d.fundamental["TTM"]["P/E"]) +
+            "<br /> EPS% Payout: " + Math.round(d.fundamental["EPS% Payout"]) + 
+            "<br /> Dividend Yield: " + Math.round(d.dividend["Div Yield"]) + 
+            "<br /> Streak Years: "+ Math.round(d.general["No Yrs"]))
+        .attr("data-html", "true")
+        .style("position", "absolute")
+        .style("left", (d3.event.pageX + 5) + "px")
+        .style("top", (d3.event.pageY) + "px")
     }
 
     /**
@@ -231,14 +231,38 @@ let displayOverview = function (data) {
 let update = function() {
     
     let newDataset = dataset.filter(function(d) {
-        if (currentSector === "Overview") {
-            return d.fundamental["PEG"] >= PEGValue && d.fundamental["EPS% Payout"] >= EPSValue
-                && d.fundamental["TTM"]["P/E"] >= PEValue && d.dividend["Div Yield"] >= dividendValue
-                && d.general["No Yrs"] >= streakValue;
+        let EPS = d.fundamental["EPS% Payout"];
+        let PEG = d.fundamental["PEG"];
+        let PE = d.fundamental["TTM"]["P/E"];
+        let DIV = d.dividend["Div Yield"];
+        let YR = d.general["No Yrs"];
+
+        if (isNaN(PEG)) {
+            PEG = 0;
         }
-        return d.general.Sector === currentSector && d.fundamental["PEG"] >= PEGValue 
-                && d.fundamental["EPS% Payout"] >= EPSValue && d.fundamental["TTM"]["P/E"] >= PEValue 
-                && d.dividend["Div Yield"] >= dividendValue && d.general["No Yrs"] >= streakValue;
+
+        if (isNaN(EPS)) {
+            EPS = 0;
+        }
+
+        if (isNaN(PE)) {
+            PE = 0;
+        }
+
+        if (isNaN(DIV)) {
+            DIV = 0;
+        }
+
+        if (isNaN(YR)) {
+            YR = 0;
+        }
+        
+        if (currentSector === "Overview") {
+            return PEG >= PEGValue && EPS >= EPSValue
+                && PE >= PEValue && DIV >= dividendValue && YR >= streakValue;
+        }
+        return d.general.Sector === currentSector && PEG >= PEGValue 
+                && EPS >= EPSValue && PE >= PEValue && DIV >= dividendValue && YR >= streakValue;
     });
     selectedTickers.destroy();
     displayOverview(newDataset);
@@ -287,6 +311,9 @@ let setSliderValues = function(data) {
         .attr("max", d3.max(data, function(d) {
             return Math.round(d.fundamental["PEG"]);
         }));
+    
+    d3.select("#peg-min").html(d3.select("#peg-slider").attr("min"));
+    d3.select("#peg-max").html(d3.select("#peg-slider").attr("max"));
 
     d3.select("#pe-slider")
         .attr("min", d3.min(data, function(d) {
@@ -296,6 +323,9 @@ let setSliderValues = function(data) {
             return Math.round(d.fundamental["TTM"]["P/E"]);
         }));
 
+    d3.select("#pe-min").html(d3.select("#pe-slider").attr("min"));
+    d3.select("#pe-max").html(d3.select("#pe-slider").attr("max"));
+
     d3.select("#eps-slider")
         .attr("min", d3.min(data, function(d) {
             return Math.round(d.fundamental["EPS% Payout"]);
@@ -303,6 +333,9 @@ let setSliderValues = function(data) {
         .attr("max", d3.max(data, function(d) {
             return Math.round(d.fundamental["EPS% Payout"]);
         }));
+
+    d3.select("#eps-min").html(d3.select("#eps-slider").attr("min"));
+    d3.select("#eps-max").html(d3.select("#eps-slider").attr("max"));
 
     d3.select("#dividend-slider")
         .attr("min", d3.min(data, function(d) {
@@ -312,6 +345,9 @@ let setSliderValues = function(data) {
             return Math.round(d.dividend["Div Yield"]);
         }));
 
+    d3.select("#div-min").html(d3.select("#dividend-slider").attr("min"));
+    d3.select("#div-max").html(d3.select("#dividend-slider").attr("max"));
+
     d3.select("#streak-slider")
         .attr("min", d3.min(data, function(d) {
             return Math.round(d.general["No Yrs"]);
@@ -319,4 +355,7 @@ let setSliderValues = function(data) {
         .attr("max", d3.max(data, function(d) {
             return Math.round(d.general["No Yrs"]);
         }));
+
+    d3.select("#streak-min").html(d3.select("#streak-slider").attr("min"));
+    d3.select("#streak-max").html(d3.select("#streak-slider").attr("max"));
 }

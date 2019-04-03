@@ -96,7 +96,7 @@ let getDefinitions = function () {
     relative to its per-share earnings (EPS). It's calculated by dividing the Market Value per Share by the EPS.`;
     
     definitions["PEG"] = 
-    `Price-Earnings-to-Growth Ratio (PEG) is a stock's PE ratio divided byt he growth rate of its earnings`;
+    `Price-Earnings-to-Growth Ratio (PEG) is a stock's PE ratio divided by the growth rate of its earnings`;
     
     definitions["Streak"] = 
     `Streak refers to the number of years that a company has been experiencing an annual increase in dividend yields`;
